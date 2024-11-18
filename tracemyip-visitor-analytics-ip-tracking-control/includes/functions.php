@@ -847,10 +847,10 @@ function tmip_convert_html_code_to_javascript($input,$returnrs=NULL) {
 				} elseif ($convert_mode==2) {
 					$code_comment='WP HTML>JS On-Install';
 				}
-				// TMIP Code Format ID 083122024803
+				// TMIP Code Format ID 083122024803 line-height:16px;
 				$code=('
 <!-- Start: Copyright '.trim($curYear).' '.$lanCompNameURL.' Service Code ('.$timeStamp.'-'.$dateStamp.') '.$code_comment.' - DO NOT MODIFY //-->
-<div style="line-height:16px;text-align:center;position:relative;z-index:100001;"><script type="text/javascript" src="//'.$trkSD.'.'.$trkDomnURL.$trSTR.'lgUrl.php?random=\'+Math.random()+\'&amp;stlVar2='.$styleN.'&amp;rgtype='.$codeID.'&amp;pidnVar2='.$ProjID.'&amp;prtVar2='.$ProjPrt.'&amp;scvVar2='.$tVr.'"></script><noscript><a href="https://www.'.$trkDomnURL.'"><img src="'.$html_srs_code.'" alt="'.$imgAlt.'" referrerpolicy="no-referrer-when-downgrade" style="border:0px;"></a></noscript></div>
+<div style="text-align:center;position:relative;z-index:100001;"><script type="text/javascript" src="//'.$trkSD.'.'.$trkDomnURL.$trSTR.'lgUrl.php?random=\'+Math.random()+\'&amp;stlVar2='.$styleN.'&amp;rgtype='.$codeID.'&amp;pidnVar2='.$ProjID.'&amp;prtVar2='.$ProjPrt.'&amp;scvVar2='.$tVr.'"></script><noscript><a href="https://www.'.$trkDomnURL.'"><img src="'.$html_srs_code.'" alt="'.$imgAlt.'" referrerpolicy="no-referrer-when-downgrade" style="border:0px;"></a></noscript></div>
 <!-- End: '.$lanCompNameURL.' Service Code //-->');
 				$code=tmip_unify_new_lines(trim($code));
 
