@@ -1,11 +1,11 @@
 === Visitor IP Tracker, IP Stats Analytics and IP Control With Email Alerts ===
 
 Contributors: TraceMyIP
-Tags: visitor,ip,tracker,stats,analytics
+Tags: visitor,tracker,ip,stats,analytics
 Requires at least: 2.0.4
 Tested up to: 6.7
 Requires PHP: 5.6
-Stable tag: 2.62
+Stable tag: 2.63
 License: GPLv2 (or later)
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://www.tracemyip.org/signup/?wp=donate
@@ -171,6 +171,13 @@ With the IP tracking address book, you can effortlessly scan through all project
 14. New visitor activity audio alerts with custom sound patterns. Set the threshold for the number of visitors across all monitored websites to trigger a sound alert.
 
 == Changelog ==
+
+= Version 2.63 =
+- Updated Geolocation engine
+- Improved reliability of rendering visitor MAP avatars
+- Increased loading performance of various reports
+- Fixed issues with website analytics dashboard where charts did not render for some requests
+- Implemented new dashboard for built-in affiliate program
 
 = Version 2.62 =
 - Functionality check and update for WordPress 6.7
