@@ -3,14 +3,14 @@
 	Plugin Name: An Official TraceMyIP Tracker with email alerts
 	Plugin URI: https://www.tracemyip.org
 	Description: Website visitor IP address activity tracking, IP analytics, visitor email alerts, IP changes tracker and visitor IP address blocking. Tag visitors IPs, track, create email alerts, control and manage pages, links and protect contact forms. GDPR compliant. For visitor tracker setup instructions, see <a href="admin.php?page=tmip_lnk_wp_settings"><b>plugin settings</b></a>.
-	Version: 2.63
+	Version: 2.64
 	Author: TraceMyIP.org
 	Author URI: https://www.TraceMyIP.org
 	Text Domain: tracemyip-visitor-analytics-ip-tracking-control
 	License: GPLv2 (or later)
 	License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
-if (!defined('TMIP_VERSION') ) 		define('TMIP_VERSION', '2.63');
+if (!defined('TMIP_VERSION') ) 		define('TMIP_VERSION', '2.64');
 
 ### SET CONSTANTS ############################################
 // header('X-XSS-Protection:0');
