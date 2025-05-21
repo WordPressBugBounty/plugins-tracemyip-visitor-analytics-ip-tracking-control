@@ -285,6 +285,13 @@
 .tmip_wp_menu_rate_link {
 	color: #00E837 !important;
 }
+li#toplevel_page_tmip_admpanel_menu ul li:hover a {
+  color: #000 !important;
+  font-weight: normal;
+}
+#toplevel_page_tmip_admpanel_menu ul.wp-submenu li:hover > a {
+    font-weight: normal !important;
+}
 .tmip_wp_cmenu_icon {
 	margin-left: 5px;
 }

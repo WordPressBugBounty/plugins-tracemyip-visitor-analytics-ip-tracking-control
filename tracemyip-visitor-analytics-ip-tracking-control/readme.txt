@@ -5,7 +5,7 @@ Tags: visitor,tracker,ip,stats,analytics
 Requires at least: 2.0.4
 Tested up to: 6.8
 Requires PHP: 5.6
-Stable tag: 2.64
+Stable tag: 2.67
 License: GPLv2 (or later)
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://www.tracemyip.org/signup/?wp=donate
@@ -173,12 +173,28 @@ With the IP tracking address book, you can effortlessly scan through all project
 
 == Changelog ==
 
+= Version 2.67 =
+- Incremental push update rev for v2.65
+
+= Version 2.66 =
+- Provisional updates for 2.65 on WordPress v6.8
+
+= Version 2.65 =
+- Provisional updates for WordPress v6.8
+- User dashboard notifications update
+- Enhanced Page Tracker IP access control module
+- Updated bots and proxies definitions
+- Optimized server network resolution for faster user interface response
+- Optimized GeoIP visitor tracker processing speed
+- Allocated more CPU resources per server for premium subscribers
+- Improved referrer parsing for all subscription levels
+
 = Version 2.64 =
 - Provision for support for WordPress v6.8
 - Applied modification to improve the responsiveness of the dashboard
 - Updated bots definitions
 - Updated proxy definitions
-- Improved dashboard compativility with older and ubuntu website browsers
+- Improved dashboard compatibility with older and ubuntu website browsers
 - Improved WordPress post view counter that groups post pages by URL or title
 
 = Version 2.63 =
@@ -437,16 +453,7 @@ With the IP tracking address book, you can effortlessly scan through all project
 * Various user interface optimizations
 
 = Version 2.25 =
-* Implemented password visibility toggle for authorized user management
-* Added new [campaigns] drill down for visitor list
-* Fixed an issue where some campaign visitors had an incorrect data aggregation
-* Added new spam referrer definitions
-* Logic improvements to the visitor tracker engine
-* Minor interface adjustments for browser compatibility
-* Updated proxy detection algorithms
-* Updated WEB SPIDER definitions
-* Added TraceMyIP menu items for the WordPress admin panel
-* Minor bug correction over v2.24
+* Minor bug corrections over v2.24
 
 = Version 2.24 =
 * Implemented password visibility toggle for authorized user management

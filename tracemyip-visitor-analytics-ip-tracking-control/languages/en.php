@@ -17,12 +17,13 @@ define("tmip_service_url", 			tmip_domain_prot.'://'.tmip_subdomain.'.'.tmip_dom
 define("tmip_learnbl_url", 			tmip_service_url.'/learn/');
 define("tmip_userguide_url", 		tmip_service_url.'/learn/?wpmenu=wpmenu_user_guide');
 define("tmip_support_url", 			tmip_service_url.'/contact.htm');
-define("tmip_acc_upgr_url", 		
-	   				tmip_service_url.'/members/index.php?rnDs=1&page=spm_checkout&type=ssub&stp=acup&wplk_pro_upgrade=20423014510');
+define("tmip_acc_upgr_url", 		tmip_service_url.'/members/index.php?rnDs=1&page=spm_checkout&type=ssub&stp=acup&wplk_pro_upgrade=20423014510');
 
 // URLS
 define("tmip_support_link", 		tmip_link(tmip_support_url,'<b>'.tmip_support_url.'</b>'));
 define("tmip_lrn_invtrk_url", 		tmip_learnbl_url.'how-to-make-a-visitor-tracker-invisible-91/?wpp=wp_plugin_settings_page');
+define("tmip_wp_plugin_review", 	'https://wordpress.org/support/plugin/tracemyip-visitor-analytics-ip-tracking-control/reviews/?rate=5#new-post');
+
 
 // FORM STATEMENTS
 define("tmip_lang_visitor_tr_code", 'Visitor Tracker Code');
@@ -39,12 +40,12 @@ define("tmip_invisible_tracker", 	'invisible tracker');
 define("tmip_menu_name", 			tmip_service_Nname);
 define("tmip_submenu_reports", 		'My Projects');
 define("tmip_wp_dashb_menu_rlink",	'Reports');
-define("tmip_submenu_settings", 	'plugin settings');
+define("tmip_submenu_settings", 	'tracker setup');
 define("tmip_submenu_unlock_frt", 	'unlock features');
 define("tmip_submenu_my_ipv46_adr", 'my current IP');
 define("tmip_submenu_ip_tools", 	'IP Tools');
 define("tmip_submenu_user_guide", 	'User Guide');
-define("tmip_submenu_rate_service", 'Be our hero');
+define("tmip_submenu_rate_service", 'Review '.tmip_service_Nname);
 
 // SECTION TITLES
 define("tmip_sectl_what_is_plugin", 'what is '.tmip_service_Nname.'?');

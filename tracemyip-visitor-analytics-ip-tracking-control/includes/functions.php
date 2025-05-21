@@ -104,6 +104,7 @@ function tmip_static_urls() {
 	// Define option vars
 	define("tmip_db_options_vars", 	
 		array(
+			// TMIP Visitor Tracker
 			'vis_tracker_code'=>			array('db_var'=>'tmip_visit_tracker',				'default'=>		''),
 			'vis_trk_code_conv_html_to_js'=>array('db_var'=>'tmip_stat_vis_tr_hjconv',			'default'=>		''),
 			'vis_tracker_code_position'=>	array('db_var'=>'tmip_visit_tracker_position',		'default'=>		'footer'),
@@ -112,10 +113,25 @@ function tmip_static_urls() {
 			'vis_tracker_first_use_unix'=>	array('db_var'=>'tmip_stat_vis_tr_first_used_unix',	'default'=>		0,	'no_reset'=>1),
 			'page_tracker_code'=>			array('db_var'=>'tmip_page_tracker',				'default'=>		''),
 			'page_tracker_ploads_oncodeup'=>array('db_var'=>'tmip_stat_pag_tr_query',			'default'=>		''),
+			
+			// Raw connectivity tracker
+			'vis_page_requests_opt'=>		array('db_var'=>'tmip_stat_page_requests',			'default'=>		0),
+		
+			// User notices 052125092856
+			'tmip_notice_views'=>			array('db_var'=>'tmip_notice_views',				'default'=>		0),
+			'tmip_notice_dismissed'=>		array('db_var'=>'tmip_notice_dismissed',			'default'=>		0),
+			'tmip_notice_snoozed'=>			array('db_var'=>'tmip_notice_snoozed',				'default'=>		0),
+			'tmip_notice_install_date'=>	array('db_var'=>'tmip_notice_install_date',			'default'=>		0),
 		)											 
 	);
 	
-	// Assign option vars
+	// Assign user notices option vars 052125092856
+	define("tmip_user_notice_install_date", tmip_db_options_vars['tmip_notice_install_date']['db_var']);	
+	define("tmip_user_notice_views", 		tmip_db_options_vars['tmip_notice_views']['db_var']);	
+	define("tmip_user_notice_dismissed", 	tmip_db_options_vars['tmip_notice_dismissed']['db_var']);	
+	define("tmip_user_notice_snoozed", 		tmip_db_options_vars['tmip_notice_snoozed']['db_var']);	
+	
+	// Assign visitor tracker option vars
 	define("tmip_visit_tracker_opt", 		tmip_db_options_vars['vis_tracker_code']['db_var']);
 	define("tmip_visit_tracker_default", 	tmip_db_options_vars['vis_tracker_code']['default']);
 	define("tmip_vis_trk_code_html_js_opt", tmip_db_options_vars['vis_trk_code_conv_html_to_js']['db_var']);
@@ -123,6 +139,10 @@ function tmip_static_urls() {
 	define("tmip_position_val", 			tmip_db_options_vars['vis_tracker_code_position']['db_var']);
 	define("tmip_position_default", 		tmip_db_options_vars['vis_tracker_code_position']['default']);
 	
+	// Front end site requests
+	define("tmip_vis_page_requests_opt", 	tmip_db_options_vars['vis_page_requests_opt']['db_var']);
+	
+	// Visitor tracker code stats
 	define("tmip_vis_trk_ploads_curr_opt", 	tmip_db_options_vars['vis_tracker_ploads_ou_opt']['db_var']);
 	define("tmip_pag_trk_ploads_curr_opt", 	tmip_db_options_vars['vis_tracker_ploads_lifetime']['db_var']);
 	define("tmip_vis_trk_first_use_opt", 	tmip_db_options_vars['vis_tracker_first_use_unix']['db_var']);	
@@ -131,6 +151,7 @@ function tmip_static_urls() {
 	define("tmip_page_tracker_default", 	tmip_db_options_vars['page_tracker_code']['default']);
 	define("tmip_page_ploads_ou_opt", 		tmip_db_options_vars['page_tracker_ploads_oncodeup']['db_var']);	
 }
+
 
 function tmip_get_url_vars() {
 	global $show_div_target;
@@ -226,18 +247,6 @@ function tmip_access_reports(){
 			'tmip_ip_tools_idx'
 		);
 	}
-	if (!empty(get_option(tmip_db_options_vars['vis_tracker_code']['db_var']))) { 
-		if (tmip_enable_meta_rating) {
-			add_submenu_page(
-				$menuID,				// Parent menu tree slug
-				ucwords(tmip_submenu_rate_service),	// page title
-				ucwords(tmip_submenu_rate_service),
-				'manage_options',		// capability
-				'tmip_rate_serv_lnk',
-				'tmip_rate_serv'		// callback function
-			); 
-		}
-	}
 	if ($mac_limit_drop<>1) {
 		add_submenu_page(
 			$menuID,
@@ -255,7 +264,19 @@ function tmip_access_reports(){
 		'manage_options',
 		'tmip_lnk_myipv_46_adr',
 		'tmip_myipv_46_adr'
-	);   
+	); 
+	if (!empty(get_option(tmip_db_options_vars['vis_tracker_code']['db_var']))) { 
+		if (tmip_enable_meta_rating_menu) {
+			add_submenu_page(
+				$menuID,				// Parent menu tree slug
+				ucwords(tmip_submenu_rate_service),	// page title
+				ucwords(tmip_submenu_rate_service),
+				'manage_options',		// capability
+				'tmip_rate_serv_lnk',
+				'tmip_rate_serv'		// callback function
+			); 
+		}
+	}
 }
 function tmip_reports_page() {
 	tmip_load_js();
@@ -365,27 +386,25 @@ $output = '
     }
 </style>
 <h2 class="tmip_sec_title">
-    <i class="fa fa-'.$helpNRateSec.' fa-lg" style="color: #02970C; opacity: 0.8;"></i> Without your support this tool will not survive!
+    <i class="fa fa-'.$helpNRateSec.' fa-lg" style="color: #02970C; opacity: 0.8;"></i> Your Rating Lights the Way!
 </h2>
 <div class="ratehelp">
     <img src="'.$tmip_plugin_dir_url.'images/tmip_team_photo_set_1.jpg" alt="TraceMyIP Team" style="float: left; margin-right: 15px; max-height: 300px;">
-    <i class="fa fa-star fa-1x tmip_outline-icon1" style="color: #FFFF00; opacity: 1.0;"></i>
-   <b> Your Rating Lights the Way!</b>
+    
     <blockquote>
         <p>Please, take a minute to <b>support people</b> who have worked on this project. Your kind words are <u>important</u> to them.</p>
-        <p><b>Since 2008</b>, they have worked on '.tmip_service_Nname.' to invent new tech and improve your experience with recent WordPress integration. Your 5-star rating isn\'t just feedback; it\'s a heartfelt "Thank You!" that sparks their drive to maintain this project and guides others toward a stellar experience.</p>
-        <p>Positive reviews fuel their commitment to your satisfaction.</p>
+        <p><b>Since 2008</b>, they have worked on '.tmip_service_Nname.' to invent new tech and improve your experience with the WordPress integration. Your 5-star rating isn\'t just feedback; it\'s a heartfelt "Thank You!" that sparks their drive to maintain this project and guides others toward a stellar experience.</p>
         <p><b>Thank you</b> in advance for your kindness <i class="fa fa-'.$thankYouIcon.' fa-lg" style="color: #AA0000; opacity: 0.8;"></i></p>
     </blockquote>
     <div style="width:100%; text-align:center;">
-        <button type="button" class="tmip_submit_button1" style="outline-color: transparent;" onclick="window.open(\'https://wordpress.org/support/plugin/tracemyip-visitor-analytics-ip-tracking-control/reviews/?rate=5#new-post\')">Be Our Hero</button>
+        <button type="button" class="tmip_submit_button1" style="outline-color: transparent;" onclick="window.open(\''.tmip_wp_plugin_review.'\')">Review Now</button>
     </div>
+	<div style="clear: both;"></div>
 </div>
 ';
-return $output;
-
-
+	return $output;
 }
+
 function tmip_plugin_row_add_rating($links,$file) {
 	global 	$tmip_plugin_dir_name,$tmip_plugin_pathbase,$tmip_plugin_sett_url,$tmip_plugin_dir_name,
 			$tmip_rate_wp_url,$tmip_rate_pl_url,$WP_admin_pages;
@@ -483,7 +502,6 @@ function tmip_insert_visitor_tracker() {
 			}
 		}
 		
-		
 		$add_remove_async=0; // 1-Add if does not exist, 2-Remove if exists
 		$pos_val=get_option(tmip_position_val);
 		
@@ -504,7 +522,7 @@ function tmip_insert_visitor_tracker() {
 		} elseif (tmip_trk_add_async_attr===1) {
 			$add_remove_async=1;
 		}
-		
+
 		$is_async_code=0;	// 1-is async, 2-is not async
 		if (strpos($code,'<script')==true) { if (stristr($code,' async ')) $is_async_code=1; else $is_async_code=2;  }
 		if ($add_remove_async==1 and $is_async_code==2) $code=str_replace('<script','<script async',$code);	// Add async
@@ -516,6 +534,8 @@ function tmip_insert_visitor_tracker() {
 		
 		echo $code;
     }
+	
+	if (!tmip_is_front_end_page()) tmip_log_stat_data(array('type'=>'page_request_query'));
 }
 function tmip_strip_divs($html) {
     $dom = new DOMDocument();
@@ -553,7 +573,15 @@ function tmip_log_stat_data($input) {
 	$database_column2=NULL;
 	$database_column3=NULL; 
 	$database_column4=NULL;
-
+	
+	// Log page requests
+	if ($type=='page_request_query') {
+		if (!tmip_is_front_end_page()) {
+			update_option(tmip_vis_page_requests_opt,(int)get_option(tmip_vis_page_requests_opt)+1);
+		}
+		return NULL;
+	}
+	
 	// Log stats
 	if ($type=='vis_tr_query' or $type=='vis_tr_reset' or $type=='pag_tr_query' or $type=='pag_tr_reset' or $type=='reset_all_data') {
 		if ($type=='vis_tr_query' or $type=='vis_tr_reset' or $type=='reset_all_data') {
@@ -949,10 +977,8 @@ function tmip_settings_page() {
 		$codeAlert_red_text .='<div class="tmip_alert_subtitle">'.tmip_fa__hand_point_right_lg.' '.tmip_invalid_nonce_check.'</div><br>';
 		$failedNonceCheck=1;
 	}
-
 	// tmip_log_stat_data(array('type'=>'reset_all_data')); // reset all stats data, leave the codes
 
-	
 	// USAGE STATS
 	$vis_tr_stats=tmip_log_stat_data(array('type'=>'vis_tr_stats'));
 	$pag_tr_stats=tmip_log_stat_data(array('type'=>'pag_tr_stats'));
@@ -1009,7 +1035,7 @@ function tmip_settings_page() {
 			} else {
 				//$codeAlert_red_text .='<div class="tmip_alert_subtitle">'.tmip_fa__hand_point_right_lg.' '.tmip_no_code_entered_alr.'</div><br>';
 			}
-			
+
 		// Project code contains page tracker code
 		} elseif ($visTRpsDbVar and strpos($visTRpsDbVar,'tP_lanPTl') !== false) {
 			if (empty($postVarVisTr) and $info_update) {
@@ -1018,7 +1044,7 @@ function tmip_settings_page() {
 				$codeAlert_red_text .='<div class="tmip_alert_subtitle">'.tmip_fa__hand_point_right_lg.' '.tmip_pagetr_into_vistrak.'</div><br>';
 				$haltUpdate='hu_visitor_tracker_1';
 			}
-		
+
 		// Project visitor tracker code is not valid - quick check
 		} elseif ($visTRpsDbVar and strpos($visTRpsDbVar,'4684NR-IPIB')==false) {
 			if (empty($postVarVisTr) and $info_update) {
@@ -1349,7 +1375,6 @@ function tmip_settings_page() {
 					</p>
 				</section>
 			</blockquote>
-			
 		';
 	}
 	
@@ -1359,10 +1384,6 @@ function tmip_settings_page() {
 		if (!$this_section) $output .='<br>';
 	}
 
-
-	
-	
-	
 	// Close panel
 	$output .='</div>';
 
@@ -1637,6 +1658,7 @@ function tmip_does_option_exist($option_name) {
     return $option_exists > 0;
 }
 
+// Use tmip_user_executed as an additional flag
 function tmip_is_front_end_page() {
     $patterns = array('/wp-admin/', 'admin.php?page', 'admin-ajax.php', 'wp-admin/', 'wp-content/plugins/', 'wp-admin/edit.php',
 					  'wp-admin/post.php');
@@ -1691,6 +1713,23 @@ function tmip_write_debug_info_to_file($vars) {
         }
         file_put_contents($file_path, $debug_info, FILE_APPEND);
     }
+}
+
+function tmip_show_array_notice( $data, $type = 'success',$fullpath = 0 ) {
+    $trace = debug_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS, 1 )[0];
+    $file  = isset( $trace['file'] ) ? $trace['file'] : 'Unknown file';
+    $line  = isset( $trace['line'] ) ? $trace['line'] : 'Unknown line';
+	if (!$fullpath ) {
+		$file = basename($file);
+	}
+
+    add_action( 'admin_notices', function() use ( $data, $type, $file, $line ) {
+        $type = in_array( $type, [ 'success', 'error', 'warning', 'info' ] ) ? $type : 'info';
+        echo '<div class="notice notice-' . esc_attr( $type ) . '"><pre>';
+        echo esc_html( print_r( $data, true ) );
+        echo "\n\nCalled at: " . esc_html( $file ) . ':' . esc_html( $line );
+        echo '</pre></div>';
+    });
 }
 
 ?>

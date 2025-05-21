@@ -7,7 +7,7 @@ function tmip_select_all(id) {
     $( document ).ready( function() {
 		
 setTimeout(function() {
-	// 🛠️ 🚀 🏆 ✨
+	// ðŸ› ï¸ ðŸš€ ðŸ† âœ¨
     var items = [
         { 
             href: 'admin.php?page=tmip_admpanel_menu', 
@@ -18,7 +18,7 @@ setTimeout(function() {
         },
         { 
             href: 'admin.php?page=tmip_rate_serv_lnk', 
-            icon: '🏆', 
+            icon: '', // 🏆  ðŸ†
             position: 1, 
             textClass: 'tmip_wp_menu_rate_link', 
             matchClass: ''
