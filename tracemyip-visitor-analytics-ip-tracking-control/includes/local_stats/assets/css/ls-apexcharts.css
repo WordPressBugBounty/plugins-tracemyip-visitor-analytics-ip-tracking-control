@@ -1,0 +1,49 @@
+/* TraceMyIP > UnFiltered Stats */
+/* Main series stroke and fill */
+.apexcharts-series path {
+  stroke: #28a745 !important; /* Bootstrap green */
+  fill: #c7efd9 !important;
+}
+
+/* Markers */
+.apexcharts-marker {
+  background: #28a745 !important;
+  border-color: #1e7e34 !important;
+}
+
+/* Tooltip */
+.apexcharts-tooltip {
+  background: #e6f4ea !important;
+  color: #155724 !important;
+  border: 1px solid #c3e6cb !important;
+}
+
+.apexcharts-tooltip-title {
+  border-bottom: 1px solid #c3e6cb !important;
+  color: #155724 !important;
+}
+.apexcharts-tooltip-marker {
+  background-color: #28a745 !important;
+}
+
+
+/* Legend */
+.apexcharts-legend-text {
+  color: #1d2327 !important;
+}
+
+/* Axis labels */
+.apexcharts-xaxis text,
+.apexcharts-yaxis text {
+  fill: #155724 !important;
+}
+
+/* Gridline (optional light green tint) */
+.apexcharts-gridline {
+  stroke: #d4edda !important;
+}
+
+/* Data labels */
+.apexcharts-datalabel {
+  fill: #28a745 !important;
+}

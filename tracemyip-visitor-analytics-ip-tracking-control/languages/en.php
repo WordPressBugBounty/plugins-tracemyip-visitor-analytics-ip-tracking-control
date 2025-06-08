@@ -15,7 +15,7 @@ define("tmip_domain_name", 			'tracemyip.org');  #  tracemyip
 define("tmip_service_url", 			tmip_domain_prot.'://'.tmip_subdomain.'.'.tmip_domain_name);
 
 define("tmip_learnbl_url", 			tmip_service_url.'/learn/');
-define("tmip_userguide_url", 		tmip_service_url.'/learn/?wpmenu=wpmenu_user_guide');
+define("tmip_userguide_url", 		tmip_service_url.'/learn/?wp_plugin=wpmenu_user_guide');
 define("tmip_support_url", 			tmip_service_url.'/contact.htm');
 define("tmip_acc_upgr_url", 		tmip_service_url.'/members/index.php?rnDs=1&page=spm_checkout&type=ssub&stp=acup&wplk_pro_upgrade=20423014510');
 
@@ -25,7 +25,24 @@ define("tmip_lrn_invtrk_url", 		tmip_learnbl_url.'how-to-make-a-visitor-tracker-
 define("tmip_wp_plugin_review", 	'https://wordpress.org/support/plugin/tracemyip-visitor-analytics-ip-tracking-control/reviews/?rate=5#new-post');
 
 
-// FORM STATEMENTS
+### UNFILTERED STATS TRACKER
+define("tmipu_name", 				'TraceMyIP'); 								// Identity name
+define("tmipu_uf_stats", 			'UnFiltered Stats'); 						// UnFiltered Stats
+define("tmipu_uf_stats_settings",	tmipu_uf_stats.' Settings (Local)'); 		// UnFiltered Stats Settings (Link Name to settings)
+define("tmipu_uf_tmip_unf_stats", 	tmipu_name.' '.tmipu_uf_stats.'');			// TraceMyIP UnFiltered Stats (Title)
+define("tmipu_uf_stats_learn_diff",	tmip_learnbl_url.'/tracemyip-unfiltered-stats-for-wordpress-2981/?wp_plugin=unfiltered_stats_pages');
+
+$v1='This panel shows <a href="'.admin_url().'">'.tmipu_uf_stats.'</a> summary only. Please read about it <a href="'.tmipu_uf_stats_learn_diff.'" target="_blank">here</a>.';
+$v2='complete <b>real</b> visitor IPs statistics and alerts';
+$v3='navigate to <a href="admin.php?page=tmip">TraceMyIP console</a>';
+define("tmipu_uf_vistr_srv_notice_1",$v1.' To continue using this panel and for '.$v2.', <a href="admin.php?page=tmip_lnk_wp_settings">setup a tracker</a> and '.$v3);
+define("tmipu_uf_vistr_srv_btnurl_1", 'admin.php?page=tmip_lnk_wp_settings');
+define("tmipu_uf_vistr_srv_notice_2",$v1.' For '.$v2.', '.$v3);
+define("tmipu_uf_vistr_srv_btnurl_2", 'admin.php?page=tmip');
+
+
+
+### WP PLUGIN FORM STATEMENTS
 define("tmip_lang_visitor_tr_code", 'Visitor Tracker Code');
 define("tmip_lang_visitr_track_ic", 'Visitor Tracker Icon');
 define("tmip_lang_tracker_icon_ps", 'Tracker Icon Position');
@@ -40,7 +57,8 @@ define("tmip_invisible_tracker", 	'invisible tracker');
 define("tmip_menu_name", 			tmip_service_Nname);
 define("tmip_submenu_reports", 		'My Projects');
 define("tmip_wp_dashb_menu_rlink",	'Reports');
-define("tmip_submenu_settings", 	'tracker setup');
+define("tmip_submenu_vis_tracker", 	'Visitor Tracker'); // WP Settings menu: tracker setup link name
+define("tmip_submenu_vt_settings", 	tmip_submenu_vis_tracker.' Setup (SaaS)'); // TraceMyIP Menu: Visitor Tracker Setup link name
 define("tmip_submenu_unlock_frt", 	'unlock features');
 define("tmip_submenu_my_ipv46_adr", 'my current IP');
 define("tmip_submenu_ip_tools", 	'IP Tools');

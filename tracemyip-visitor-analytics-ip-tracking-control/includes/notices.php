@@ -28,12 +28,12 @@ return [
         'action_popup'   => 0,
         'if_option_is'   => array(tmip_visit_tracker_opt,'option_not_set'), 
         'views_limit'    => 50,
-        'expires_after'  => 7*86400,
+        'expires_after'  => 40*86400,
         'days_after'     => 0,     
         'min_fe_req'  	 => 0,
         'min_trk_loads'  => 0,
         'probability'    => 100,
-        'snooze_days'    => 7,
+        'snooze_days'    => 5,
         //'start_date'     => strtotime('2025-05-01'),// Show starting Jan 1, 2023
         //'end_date'       => strtotime('2026-12-31'),// Stop showing after Dec 31, 2023
     ],

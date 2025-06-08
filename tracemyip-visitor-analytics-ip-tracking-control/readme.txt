@@ -1,58 +1,104 @@
-=== Visitor IP Tracker, IP Stats Analytics and IP Control With Email Alerts ===
-
+=== Trace My IP - Visitor IP Tracker, Stats Analytics & Page Views Counter with Email Alerts ===
 Contributors: TraceMyIP
-Tags: visitor,tracker,ip,stats,analytics
+Tags: visitor tracking, ip tracker, visitor stats, website analytics, statistics, stats, trace my ip, post views counter, page views tracker, email alerts, hits counter, ip blocker, visitor analytics
 Requires at least: 2.0.4
 Tested up to: 6.8
-Requires PHP: 5.6
-Stable tag: 2.67
+Requires PHP: 7.2
+Stable tag: 2.68
 License: GPLv2 (or later)
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Donate link: https://www.tracemyip.org/signup/?wp=donate
+Donate link: https://www.paypal.com/donate/?hosted_button_id=TND7BL8C3KFEW
 Plugin URI: https://www.tracemyip.org
 
-The Official [TraceMyIP](https://www.tracemyip.org?wpp=readme_description) visitor IP tracker and page view counter. IP location tracker, IP blocker, visitor email alerts, stats counter, GDPR analytics and statistics
+Comprehensive visitor IP tracking and website analytics solution with real-time statistics, page view counting, and customizable email alerts. Monitor, block, and control visitor access with detailed IP analytics.
+
+== TWO Independent Visitor Tracking Systems Included ==
+
+**1. Cloud-Based SaaS Tracking**
+Embed a tracker code into your site and access full-featured analytics via the TraceMyIP SaaS console — integrated directly within your WordPress admin.
+
+**2. Local "UnFiltered Stats" Tracker**
+A standalone, compact tracking system that logs visitor activity directly inside your WordPress dashboard, with no external connections required to log the page views.
+
+== FEATURE HIGHLIGHTS ==
+* **All your sites. No-Delays stats. All on the primary SaaS dashboard.**
+* [UnFiltered Stats Tracker](https://www.tracemyip.org/tools/link-click-tracker-ad-clicks-counter-ip-blocker/?wpp=readme_txt) - instantly view behind-the-scenes activity right inside WordPress, including key server requests like post, page, and article views, scraping attempts, AD and tracking blocked page views, IPv4 and IPv6 connections (hosting server must have IPv6 support), ghost traffic and traffic trends — directly on your WordPress dashboard.
+* [WordPress Blog **Visitor IP Tracking** and Analytics](https://www.tracemyip.org/website-analytics.htm?wpp=readme_txt)
+* [Website Visits **Email Alerts**](https://www.tracemyip.org/website-visitors-alerts.htm?wpp=readme_txt)
+* [Page **Visitor IP** Blocking and Control](https://www.tracemyip.org/learn/how-to-block-an-ip-address-1017/?wpp=readme_txt)
+* [WordPress individual **Link Tracking**](https://www.tracemyip.org/tools/link-click-tracker-ad-clicks-counter-ip-blocker/?wpp=readme_txt)
+* [Tracking WordPress **Visitor IP changes** and **Visitor Tagging**](https://www.tracemyip.org/tools/online-address-book-web-contact-list/?wpp=readme_txt)
+* [EU GDPR Compliant Website and Blog Tracking](https://www.tracemyip.org/GDPR-compliant-website-tracking-software.htm?wpp=readme_txt)
+* [Cookieless Tracking for WordPress](https://www.tracemyip.org/tools/cookie-free-tracking-analytics-eu-cookie-law-solution/)
+* **Provides additional features** and targeted IP data to **complement built-in dashboard statistics** and popular analytics tools such as *Google Analytics, Semrush, Adobe Analytics, Statcounter, Clicky, Matomo Analytics, Plausible, Fathom Analytics, Piwik PRO, Heap, Mixpanel, Amplitude, cPanel Analytics*, and more. 
+
+IP address data can be matched with other statistics platforms and tagged to reveal visit history for individual site visitors.
 
 == Description ==
 
-TraceMyIP Visitor IP Stats Tracker plugin features easy wordpress website analytics, visitor IP tracking with email alerts, post views counting, visitor IP blocking, IP redirecting, and IP access control.
+**Trace My IP** is the ultimate WordPress plugin for visitor tracking, IP analytics, and website statistics. Get detailed insights about your visitors including:
 
-= Powerful features that help to stay in control of website visitations =
+- Real-time **IP tracking** and geolocation data
+- Accurate **page views counter** and **post views counter**
+- Customizable **email alerts** for visitor activity
+- Advanced **visitor statistics** and **website analytics**
+- Powerful **IP blocker** and access control features
+- Comprehensive **visitor stats** dashboard
 
-**Optimized for current web technology** - accurately capturing all real-time website visitor interaction
+== Key Features ==
 
-* [WordPress Blog Visitor IP Tracking and Analytics](https://www.tracemyip.org/website-analytics.htm?wpp=readme_txt)
-* [Website Visits Email Alerts](https://www.tracemyip.org/website-visitors-alerts.htm?wpp=readme_txt)
-* [Page Visitor IP Blocking and Control](https://www.tracemyip.org/learn/how-to-block-an-ip-address-1017/?wpp=readme_txt)
-* [WordPress Link Tracking](https://www.tracemyip.org/tools/link-click-tracker-ad-clicks-counter-ip-blocker/?wpp=readme_txt)
-* [Tracking WordPress Visitor IP changes and Visitor Tagging](https://www.tracemyip.org/tools/online-address-book-web-contact-list/?wpp=readme_txt)
-* [EU GDPR Compliant Website and Blog Tracking](https://www.tracemyip.org/GDPR-compliant-website-tracking-software.htm?wpp=readme_txt)
-* [Cookieless Tracking for WordPress](https://www.tracemyip.org/tools/cookie-free-tracking-analytics-eu-cookie-law-solution/)
-* Provides additional features and targeted IP data to complement and associate with built-in dashboard statistics, Google Analytics, Semrush, Adobe Analytics, Statcounter, Clicky, Matomo Analytics and others. The IP address data can be matched to other stats packages and tagged to provide visit history data for specific site visits.
+= Visitor Tracking & IP Analytics =
+- Complete **visitor IP tracker** with detailed location data
+- Advanced **website analytics** and traffic statistics
+- **Page views tracker** with historical data
+- **Post views counter** for individual content analysis
+
+= Access Control & Alerts =
+- **IP blocker** to restrict unwanted visitors
+- Custom rules for **IP access control**
+- Instant **email alerts** for specific visitor actions
+- Automated notifications for suspicious activity
+
+= Statistics & Reporting =
+- Comprehensive **visitor statistics** dashboard
+- Detailed **website analytics** reports
+- **Hits counter** with traffic trends analysis
+- Exportable **stats** for further analysis
+
+== Why Choose Trace My IP? ==
+
+**Optimized for accuracy:** Captures genuine user interactions while excluding bots, scrapers, and artificial traffic. Our advanced **IP tracker** provides the most reliable **visitor statistics** available.
+
+**Complete visitor insights:** From basic **page views counter** to advanced **website analytics**, get all the data you need in one powerful plugin.
+
+**Stay in control:** With our **IP blocker** and **email alerts**, you'll always know who's accessing your site and can take immediate action when needed.
 
 == Installation ==
 
-TraceMyIP features like WordPress visitor IP tracking, website statistics, and visitor email alerts with an IP control are instantly activated by activating a TraceMyIP.org console
+TraceMyIP features such as WordPress visitor IP tracking, website statistics, and visitor email alerts with IP control are activated by registering for access to your Trace My IP Console at TraceMyIP.org. 
+
+The built-in UnFiltered Stats Tracker is enabled immediately upon plugin installation.
 
 **The installation consists of 3 simple steps:**
 
 **1.** Install the WordPress TraceMyIP plugin
 
-**2.** Register at www.tracemyip.org get a WordPress site visitor tracker code and console access. Multiple sites are managed under the same console.
+**2.** Register at www.tracemyip.org to get a WordPress site visitor tracker code and console access. Multiple sites are managed under the same analytics console.
 
 **3.** Place the code into the "Visitor Tracker Code" input box at the bottom of the TraceMyIP WordPress plugin settings page
 
-**That's all**! Now login to your TraceMyIP account and instantly observe website visitor activity in real-time.
+**That's ALL**! Now login to your TraceMyIP.org account and instantly observe website visitor activity in real-time.
 
-**Detailed steps to enable TraceMyIP.org tools for WordPress:**
+**Detailed steps to enable ALL TraceMyIP features and tools for WordPress:**
 
+* Install **Trace My IP** Wordpress plugin to instantly activate **UnFiltered Stats** Tracking. The settings can be set under the main TraceMyIP menu.
 * [**Sign Up**](https://www.tracemyip.org/tools/website-visitors-counter-traffic-tracker-statistics/index.php?sto=1&wpp=readme_txt) at TraceMyIP.org by selecting a Visitor Tracker style or click on the [**Add a New Project**] menu button of an existing TraceMyIP console account.
 * **Generate a Website Visitor Tracker code** with TraceMyIP.org. If the code is lost, log-in to your TraceMyIP console, go to "**My Projects**" page, and click on the "**tracker code**" link to recover your code.
-* **Install TraceMyIP plugin for WordPress** and go to the plugin settings page using the WordPress dashboard menu
-* **Paste the TraceMyIP Visitor Tracker code** into the [**visitor tracker code**] input box and click on the Update Settings button below
+* Navigate to **TraceMyIP** plugin **Tracker Settings** settings page using the WordPress dashboard menu and **Paste the TraceMyIP Visitor Tracker code** into the [**visitor tracker code**] input box and click on the Update Settings button below
 * **Verify** that the Visitor Tracker icon shows up on **ALL** pages of your WordPress site, including the mobile pages
 * **If you need visitor IP blocking**, redirecting, and page access controls, generate a **Page Tracker Code** within your TraceMyIP project and place the code into the [**Page Tracker Code**] input box using the TraceMyIP plugin settings page
-* **To access the TraceMyIP console**, login to your WordPress and go to [Dashboard] => [TraceMyIP Reports]. If your browser is not displaying reports from WordPress dashboard, open a new browser tab and login directly at [**TraceMyIP.org**](https://www.tracemyip.org/?wpp=readme_txt)
+* **To access the TraceMyIP console**, login to your WordPress and go to [Dashboard] => [TraceMyIP Reports]. 
+*Note: If your browser is not displaying reports from WordPress dashboard, open a new browser tab and login directly at* [**TraceMyIP.org**](https://www.tracemyip.org/?wpp=readme_txt)
 * To configure GDPR Compliance Tools, log in to TraceMyIP.org and navigate to [My Account] => [Advanced Tracking Settings]
 
 
@@ -171,7 +217,28 @@ With the IP tracking address book, you can effortlessly scan through all project
 
 14. New visitor activity audio alerts with custom sound patterns. Set the threshold for the number of visitors across all monitored websites to trigger a sound alert.
 
+== Upgrade Notice ==
+
+= Version 2.68 =
+* Notice: New methods in plugin WP database utilization. Please generate your site database backup
+
+= Version 2.54 =
+* Notice: Improved compatibility with current version of WordPress. Recommended full site backup before upgrade.
+
+= Version 2.11 =
+* Notice: Consequent versions will require PHP 7.2 or higher.
+
 == Changelog ==
+
+= Version 2.68 =
+- NEW! UnFiltered Stats Module tracking system for WordPress (BETA Release)
+  (Feature set is subject to changes at any time)
+- Omptimized the SaaS primary console responsiveness
+- Integration of UnFiltered Stats module with SaaS tracking
+- Added options to selectively enable UnFiltered Stats dashboard widgets
+- Added Bitcoin payments support for premium subscriptions
+- Added new definitions for bots and scrapers
+- Added definitions for AD blocking tracker requests
 
 = Version 2.67 =
 - Incremental push update rev for v2.65

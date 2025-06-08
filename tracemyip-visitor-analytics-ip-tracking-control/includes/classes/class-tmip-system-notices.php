@@ -59,6 +59,15 @@ class TMIPSystemNotices {
         if (!tmip_user_executed or !current_user_can('manage_options')) {
             return;
         }
+		// Don't show notices if plugin was just upgraded
+		if (isset($_GET['action']) && $_GET['action'] === 'upgrade-plugin' ||  // Plugin upgrade via WordPress
+			isset($_GET['action']) && $_GET['action'] === 'upload-plugin' ||   // Plugin upload
+			isset($_GET['updated']) ||                                         // Plugin was just updated
+			isset($_GET['activated']) ||                                       // Plugin was just activated
+			(isset($_GET['action']) && $_GET['action'] === 'activate-plugin')  // Plugin activation in progress
+		) {
+			return; // Don't show notices during plugin upgrade/upload screens
+		}
         
         // Only count views on actual user requests (not WordPress preloads)
         if (defined('DOING_AJAX') || defined('DOING_CRON') || 
@@ -158,7 +167,7 @@ class TMIPSystemNotices {
 
             // Check installation date
             $days_after = isset($notice['days_after']) ? $notice['days_after'] : $this->settings['days_after'];
-			$install_date = get_option('tmip_install_date'); // If not present, plugin was installed before user notices implementation
+			$install_date = get_option(tmip_user_notice_install_date); // If not present, plugin was installed before user notices implementation
             if ($days_after > 0) {
                 $required_date = strtotime('-'.$days_after.' days');
                 if (!empty($install_date) and $install_date > $required_date) {
@@ -246,11 +255,13 @@ class TMIPSystemNotices {
             border: 2px dashed <?php echo esc_attr($border_color); ?> !important;
 			border-radius: 15px!important;
             background: <?php echo esc_attr($background); ?> !important;
-            box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.6) !important;
+            //box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.6) !important;
+			box-shadow: inset 0 5px 6px rgba(0, 0, 0, 1) !important;
 			padding: 6px 10px!important;
 			max-width: 820px!important;
 			margin: 0 auto!important;
-        }
+ 			margin-bottom: 15px!important;
+       }
         .tmip-notice-<?php echo esc_attr($this->current_notice_key); ?> h1,
         .tmip-notice-<?php echo esc_attr($this->current_notice_key); ?> h2,
         .tmip-notice-<?php echo esc_attr($this->current_notice_key); ?> h3 {

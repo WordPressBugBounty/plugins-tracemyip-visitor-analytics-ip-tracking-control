@@ -9,7 +9,6 @@
 	background-color: #333333;
 }
 
-
 #tmip_sett_wrap_1 p,
 #tmip_sett_wrap_2 p,
 #tmip_sett_wrap_3 p,
@@ -285,9 +284,17 @@
 .tmip_wp_menu_rate_link {
 	color: #00E837 !important;
 }
+
+/* Admin Menu - highlighted when CSS is loaded 052625094214 */
+#adminmenu .toplevel_page_tmip_admpanel_menu img {
+    width: 20px;
+    height: 20px;
+    padding: 6px 0 0;
+    opacity: 1!important;
+}
 li#toplevel_page_tmip_admpanel_menu ul li:hover a {
   color: #000 !important;
-  font-weight: normal;
+  font-weight: normal!important;
 }
 #toplevel_page_tmip_admpanel_menu ul.wp-submenu li:hover > a {
     font-weight: normal !important;
@@ -299,7 +306,6 @@ li#toplevel_page_tmip_admpanel_menu ul li:hover a {
 	opacity: 0.6;
 	font-size: 0.8em;
 }
-
 li#toplevel_page_tmip_admpanel_menu {
 	color: #000 !important;
     background-color: #2E645D!important;

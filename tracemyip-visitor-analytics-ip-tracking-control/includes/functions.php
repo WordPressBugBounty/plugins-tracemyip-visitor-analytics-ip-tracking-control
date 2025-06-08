@@ -125,7 +125,7 @@ function tmip_static_urls() {
 		)											 
 	);
 	
-	// Assign user notices option vars 052125092856
+	// User notices option vars 052125092856
 	define("tmip_user_notice_install_date", tmip_db_options_vars['tmip_notice_install_date']['db_var']);	
 	define("tmip_user_notice_views", 		tmip_db_options_vars['tmip_notice_views']['db_var']);	
 	define("tmip_user_notice_dismissed", 	tmip_db_options_vars['tmip_notice_dismissed']['db_var']);	
@@ -179,6 +179,31 @@ function tmip_rate_serv() {
 	$output .='</div>';
 	echo $output;
 }
+
+// Shared MATCH CONDITION in TMIP third-party
+function tmip_reports_access_is_mac() {
+	$curUserAgent=trim($_SERVER['HTTP_USER_AGENT']);
+	$mac_link_tologin=0;
+	if ($ua=$curUserAgent) {
+		// Do not show upgrade menu links - case insensitive 041023084633
+		if ((stristr($ua, 'Macintosh;') && stristr($ua, 'Safari/') && !stristr($ua, 'Chrome'))	// Safari on macOS (excluding Chrome)
+			# || preg_match('/Chrome|Edg\/|MSIE|Trident\//', $ua)  								// Chrome, Edge, Internet Explorer
+		) {
+			$mac_link_tologin=1;
+		}
+	}
+	return $mac_link_tologin;
+}
+
+function tmip_reports_url() {
+	if (tmip_reports_access_is_mac()) {
+		$v=tmip_home_page_login;
+	} else {
+		$v=tmip_go_to_projects;
+	}
+	return trim($v);
+}
+
 function tmip_access_reports(){
 	global $tmip_plugin_dir_url,$tmip_plugin_sett_url;
 	
@@ -187,19 +212,7 @@ function tmip_access_reports(){
 	$icon_url=$tmip_plugin_dir_url.'images/tmip_icon_admin_menu.png';
 	$vis_tr_stats=tmip_log_stat_data(array('type'=>'vis_tr_stats'));
 	
-	// Shared MATCH CONDITION in TMIP third-party
-	$curUserAgent=trim($_SERVER['HTTP_USER_AGENT']);
-	global $mac_link_tologin;
-	$mac_limit_drop=0; $mac_link_tologin=0;
-	if ($ua=$curUserAgent) {
-		// Do not show upgrade menu links - case insensitive 041023084633
-		if ((stristr($ua, 'Macintosh;') && stristr($ua, 'Safari/') && !stristr($ua, 'Chrome'))	// Safari on macOS (excluding Chrome)
-			# || preg_match('/Chrome|Edg\/|MSIE|Trident\//', $ua)  								// Chrome, Edge, Internet Explorer
-		) {
-			$mac_limit_drop=1;
-			$mac_link_tologin=1;
-		}
-	}
+	$mac_limit_drop=$mac_link_tologin=tmip_reports_access_is_mac();
 	
 	// Main admin menu
 	add_menu_page(
@@ -218,14 +231,6 @@ function tmip_access_reports(){
 		'manage_options',			// capability
 		$menuID.'',					// main menu link - make same as primary menu name to create and replace submenu
 		'tmip_reports_page'			// callback function
-	);  
-	add_submenu_page(
-		$menuID,
-		tmip_service_Nname.' > '.ucwords(tmip_submenu_settings),
-		ucwords(tmip_submenu_settings),
-		'manage_options',
-		'tmip_lnk_wp_settings',
-		'tmip_wp_settings'
 	);  
 	if (1==1) {
 		add_submenu_page(
@@ -277,17 +282,20 @@ function tmip_access_reports(){
 			); 
 		}
 	}
+	add_submenu_page(
+		$menuID,
+		tmip_submenu_vt_settings,
+		tmip_submenu_vt_settings,
+		'manage_options',
+		'tmip_lnk_wp_settings',
+		'tmip_wp_settings'
+	);  
 }
 function tmip_reports_page() {
 	tmip_load_js();
-	global $mac_link_tologin;
-	if ($mac_link_tologin) {
-		$v=tmip_home_page_login;
-	} else {
-		$v=tmip_go_to_projects;
-	}
-	tmip_wp_iframe_page($v);
+	tmip_wp_iframe_page(tmip_reports_url());
 }
+
 function tmip_upgrade_page() {
 	tmip_load_js();
 	tmip_wp_iframe_page(tmip_go_to_upgrade);
@@ -438,16 +446,8 @@ function tmip_plugin_row_add_rating($links,$file) {
 	
 	return $links;
 }
-function tmip_setting_link($links) {
-	global $tmip_plugin_admin_url;
-	if (is_multisite() && !is_main_site () && !current_user_can('manage_network_plugins')) return $links;
-	
-	$settings_link='<a href="'.$tmip_plugin_sett_url.'">'._x('Settings', 'Menu item', 'tracemyip-visitor-analytics-ip-tracking-control') . '</a>';
-	array_unshift ($links, $settings_link);
-	return $links;
-}
 function tmip_plugin_action_links($links) {
-	global $tmip_plugin_sett_url;
+	global $tmip_plugin_sett_url; 
 	if (is_multisite() && !is_main_site () && !current_user_can ('manage_network_plugins')) {
 		return $links;
 	}
@@ -455,8 +455,14 @@ function tmip_plugin_action_links($links) {
 	array_unshift($links, 
 		'<a href="'.tmip_acc_upgr_url.'" target="_blank">'.tmip_upgrade_to_pro_vers.'</a>' );
 	
+	if (defined('tmipu_uf_stats_settings')) {
+		array_unshift ($links, // 052825081530
+			'<a href="admin.php?page=tmip_local_stats&tab=general">'._x(tmipu_uf_stats_settings, 'Menu item', 'tracemyip-visitor-analytics-ip-tracking-control') . '</a>');
+	}
+	
 	array_unshift ($links, 
-		'<a href="'.$tmip_plugin_sett_url.'">'._x('Settings', 'Menu item', 'tracemyip-visitor-analytics-ip-tracking-control') . '</a>');
+		'<a href="'.$tmip_plugin_sett_url.'">'._x(tmip_submenu_vt_settings, 'Menu item', 'tracemyip-visitor-analytics-ip-tracking-control') . '</a>');
+	
 	return $links;
 }
 function tmip_admin_init() {
@@ -671,7 +677,7 @@ function tmip_admin_menu() {
 	$hook=add_submenu_page(
 		'index.php',	// index,php to attached to dashboard menu
 		__(tmip_service_Nname.' '.tmip_wp_dashb_menu_rlink),
-		'<b style="color:#A4F9F7;letter-spacing: 0.05em;">'.__(tmip_service_Nname.'</b>'),
+		'<b style="font-weight:600;letter-spacing: 0.05em;">'.__(tmip_service_Nname.'</b>'),
 		'publish_posts',
 		'tmip',			// tmip to highlight the dashboard link
 		'tmip_reports_page'
@@ -692,11 +698,17 @@ function tmip_admin_menu() {
 	);
 */
 }
-// Add link to WP settings
+// WP settings menu: link to tracker setup
 function add_tmip_option_page() {
 	global $tmip_plugin_sett_url;
 	global $tmip_plugin_basename;
-	add_options_page(tmip_service_Nname.' Settings', tmip_service_Nname, "manage_options",  $tmip_plugin_sett_url, '');
+	add_options_page(
+		tmip_service_Nname.' '.tmip_submenu_vt_settings,
+		'<span style="font-weight:600;">'.tmip_service_Nname.'</span> '.tmip_submenu_vis_tracker.'', 
+		"manage_options",  
+		$tmip_plugin_sett_url, 
+		''
+	);
 // add_options_page(tmip_service_Nname.' Settings', tmip_service_Nname, "manage_options", $tmip_plugin_basename, 'tmip_settings_page');
 }
 function tmip_reports_load() {

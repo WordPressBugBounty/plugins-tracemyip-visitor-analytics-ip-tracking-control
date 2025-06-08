@@ -3,23 +3,24 @@ defined('ABSPATH') || exit;
 /*
 	Plugin Name: An Official TraceMyIP Tracker with email alerts
 	Plugin URI: https://www.tracemyip.org
-	Description: Website visitor IP address activity tracking, IP analytics, visitor email alerts, IP changes tracker and visitor IP address blocking. Tag visitors IPs, track, create email alerts, control and manage pages, links and protect contact forms. GDPR compliant. For visitor tracker setup instructions, see <a href="admin.php?page=tmip_lnk_wp_settings"><b>plugin settings</b></a>.
-	Version: 2.67
+	Description: Website visitor IP address activity tracking, IP analytics, visitor email alerts, IP changes tracker and visitor IP address blocking. UnFiltered post stats dashboard. Tag visitors IPs, count and track post views, schedule email alerts, control and manage pages, links and protect contact forms. GDPR options.
+	Version: 2.68
 	Author: TraceMyIP.org
 	Author URI: https://www.TraceMyIP.org
-	Text Domain: tracemyip-visitor-analytics-ip-tracking-control
+	Text Domain: tracemyip-local-stats
 	License: GPLv2 (or later)
 	License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
-if (!defined('TMIP_VERSION') ) 		define('TMIP_VERSION', '2.67');
+if (!defined('TMIP_VERSION') ) 		define('TMIP_VERSION', '2.68');
 
 ### SET CONSTANTS ############################################
 // header('X-XSS-Protection:0');
 $script_filename = isset($_SERVER['SCRIPT_FILENAME']) ? trim($_SERVER['SCRIPT_FILENAME']) : '';
 define("tmip_plugin_path",plugin_dir_path( __FILE__ ));
-require_once(tmip_plugin_path.'languages/en.php');
+require_once(tmip_plugin_path.'languages/en.php'); /* Load plugin constants */
 
 define("tmip_plugin_dir_name", 			'tracemyip-visitor-analytics-ip-tracking-control', false);
+define("tmip_enable_local_tracker_ops", 1); 	// 1-Enable [UnFiltered Stats Tracker] options 052425122331
 define("tmip_enable_user_notices", 		1); 	// User notices on WP Dashboard: 1-enable
 define("tmip_enable_meta_rating", 		2); 	// Show rate section. 1-post selected rating, 2-show transitional screen
 define("tmip_enable_meta_rating_menu", 	1); 	// Show rate section menu link
@@ -75,9 +76,9 @@ add_action('admin_menu', 	'tmip_admin_menu');
 add_action('wp_head', 		'tmip_addToTags');
 
 
-### FUNCTIONS ############################################
+### MODULES ############################################
 # 052125092856
-// Initialize user notices: Reset by $tmip_notices_debug
+// USER NOTICES: Reset by $tmip_notices_debug
 $tmipSysNTF=tmip_plugin_path . 'includes/classes/class-tmip-system-notices.php';
 if (tmip_enable_user_notices==1 and file_exists($tmipSysNTF)) {
     include_once($tmipSysNTF);
@@ -92,6 +93,23 @@ if (tmip_enable_user_notices==1 and file_exists($tmipSysNTF)) {
             delete_transient(tmip_user_notice_snoozed); 
         }
     }
+}
+
+// UNFILTERED STATS module (TraceMyIP > UnFiltered Stats) 052425122331
+$tmipSysUFT=tmip_plugin_path . 'includes/local_stats/ls-class.php';
+if (defined('tmip_enable_local_tracker_ops') && tmip_enable_local_tracker_ops and file_exists($tmipSysUFT)) {
+    require_once(tmip_plugin_path.'includes/local_stats/ls-class.php');
+    register_activation_hook(__FILE__, function() {
+        TMIP_Local_Stats::init()->maybe_create_tables();
+    });
+    register_activation_hook(__FILE__, array('TMIP_Local_Stats', 'plugin_activated')); // Clear cache notice for installation
+    add_action('init', function() {
+        if (defined('DOING_AJAX') && DOING_AJAX) {
+            tmip_debug_log('AJAX request detected');
+            add_action('wp_ajax_tmip_record_view', array('TMIP_Local_Stats_Tracking', 'record_view'));
+            add_action('wp_ajax_nopriv_tmip_record_view', array('TMIP_Local_Stats_Tracking', 'record_view'));
+        }
+    });
 }
 
 // Reset plugin settings: 1-reset all except no_reset flagged vars, 2-reset all to defaults, 3-delete all options
