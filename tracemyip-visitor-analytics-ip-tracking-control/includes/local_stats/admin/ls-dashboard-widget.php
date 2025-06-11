@@ -233,7 +233,8 @@ class TMIP_Local_Stats_Dashboard {
 			// Store success in transient
 			set_transient('tmip_admin_notice', [
 				'type' => 'success',
-				'message' => __('Dashboard widget has been positioned at the top for all users.', 'tracemyip-local-stats')
+				'message' => __('Dashboard widget has been positioned at the top for all users.', 'tracemyip-local-stats'),
+    			'class' => 'tmip-notice tmip-notice-success'
 			], 45);
 
 		} catch (Exception $e) {

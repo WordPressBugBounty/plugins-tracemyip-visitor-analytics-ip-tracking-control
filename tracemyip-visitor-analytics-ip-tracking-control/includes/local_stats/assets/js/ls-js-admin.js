@@ -52,7 +52,7 @@ function tmipShowNotice($notice) {
     });
 
     // Setup dismiss button behavior
-    $notice.find('.notice-dismiss').on('click', function() {
+    $notice.find('.tmip-notice-dismiss').on('click', function() {
         $notice.fadeOut(300, function() {
             $notice.remove();
         });
@@ -108,7 +108,7 @@ jQuery(document).ready(function($) {
 
 			// Create and insert notice
 			const $notice = $(`
-				<div class="notice notice-${type} is-dismissible">
+				<div class="tmip-notice tmip-notice-${type} is-dismissible">
 					<p><strong>${message}</strong></p>
 					<button type="button" class="notice-dismiss">
 						<span class="screen-reader-text">Dismiss this notice.</span>
@@ -116,6 +116,8 @@ jQuery(document).ready(function($) {
 				</div>
 			`);
 
+			// Update notice class references
+			$('.tmip-notice').remove(); // Remove existing tmip notices before adding new one. Around line 580
 			$('.wrap > h1').after($notice);
 			noticeShown = true;
 
@@ -190,10 +192,9 @@ jQuery(document).ready(function($) {
 		// Show loader
 		tmipToggleLoader(true);
 
-		// Clear any existing notices
-		$('.tmip-admin-notice, .settings-error').remove();
+		// Clear any existing notices - REMOVE .settings-error from here
+		$('.tmip-notice, .tmip-admin-notice').remove();
 
-		// Don't prevent form submission
 		return true;
 	});
 

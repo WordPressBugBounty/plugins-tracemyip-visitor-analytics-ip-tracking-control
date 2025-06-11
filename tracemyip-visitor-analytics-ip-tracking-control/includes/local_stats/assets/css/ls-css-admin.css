@@ -809,34 +809,33 @@
 =  Notifications & Alerts  =
 ======================*/
 
-.notice {
+.tmip-notice {
     position: relative;
-    padding: 10px 40px 10px 15px !important;
-    margin: 10px 0 20px !important;
+    padding: 10px 15px 10px 15px !important;
+    margin: 10px 20px 10px 0px!important;
     border-radius: 4px !important;
     box-shadow: 0 2px 4px rgba(0,0,0,0.05) !important;
     opacity: 1 !important;
 }
-.notice p {
-    display: flex !important;
+.tmip-notice p {
     align-items: center !important;
     margin: 0 !important;
     padding: 0 !important;
     font-size: 14px !important;
     line-height: 1.4 !important;
 }
-.notice-success,
-.notice-updated {
+.tmip-notice-success,
+.tmip-notice-updated {
     background-color: #f0fff4 !important;
     border-left: 4px solid #68d391 !important;
     animation: tmip-notice-slide 0.3s ease-out;
 }
-.notice-success p,
-.notice-updated p {
+.tmip-notice-success p,
+.tmip-notice-updated p {
     color: #276749 !important;
 }
-.notice-success p:before,
-.notice-updated p:before {
+.tmip-notice-success p:before,
+.tmip-notice-updated p:before {
     content: '✓';
     display: inline-block;
     margin-right: 12px;
@@ -844,18 +843,14 @@
     color: #68d391;
     font-weight: bold;
 }
-.notice-error {
+.tmip-notice-error {
     background-color: #fff5f5 !important;
     border-left: 4px solid #fc8181 !important;
 }
-.notice-error p {
+.tmip-notice-error p {
     color: #c53030 !important;
 }
-@keyframes tmip-notice-slide {
-    from { transform: translateY(-10px); }
-    to { transform: translateY(0); }
-}
-.notice-dismiss {
+.tmip-notice-dismiss {
     position: absolute;
     top: 0;
     right: 0;
@@ -863,11 +858,14 @@
     opacity: 0.7;
     transition: opacity 0.2s ease;
 }
-.notice-dismiss:hover {
+.tmip-notice-dismiss:hover {
     opacity: 1;
 }
-.tmip-cache-notice p {
-    display: block !important;
+
+/* Cache notice */
+@keyframes tmip-notice-slide {
+    from { transform: translateY(-10px); }
+    to { transform: translateY(0); }
 }
 .tmip-cache-notice ol {
     margin: 10px 0 10px 30px !important;
@@ -876,12 +874,6 @@
 .tmip-cache-notice li {
     margin: 5px 0 !important;
     line-height: 1.4 !important;
-}
-.tmip-cache-instructions {
-    background: #f8f9fa;
-    padding: 10px !important;
-    border-radius: 4px;
-    margin-top: 10px !important;
 }
 .notice .dashicons-warning {
     display: inline-block;
@@ -894,7 +886,7 @@
     background: #FAF974;
 }
 .tmip-cache-notice p {
-    font-size: 13px !important; /* Corrected font size */
+    font-size: 1em !important;
     margin: 0.5em 0;
     padding: 2px;
 }
@@ -903,6 +895,12 @@
     width: 20px;
     height: 20px;
     vertical-align: middle;
+}
+.tmip-cache-instructions {
+    background: #f8f9fa;
+    padding: 10px !important;
+    border-radius: 4px;
+    margin: 10px 0px 0px 0px!important;
 }
 .tmip-cache-instructions {
     font-size: 16px;

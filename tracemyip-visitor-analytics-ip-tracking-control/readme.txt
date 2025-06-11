@@ -4,7 +4,7 @@ Tags: visitor tracking, ip tracker, visitor stats, website analytics, statistics
 Requires at least: 2.0.4
 Tested up to: 6.8
 Requires PHP: 7.2
-Stable tag: 2.69
+Stable tag: 2.70
 License: GPLv2 (or later)
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://www.paypal.com/donate/?hosted_button_id=TND7BL8C3KFEW
@@ -231,6 +231,10 @@ With the IP tracking address book, you can effortlessly scan through all project
 * Notice: Consequent versions will require PHP 7.2 or higher.
 
 == Changelog ==
+
+= Version 2.70 =
+- Incremental interface layout update
+- User notification dialog changes
 
 = Version 2.69 =
 - Optimized UnFiltered Stats settings panel

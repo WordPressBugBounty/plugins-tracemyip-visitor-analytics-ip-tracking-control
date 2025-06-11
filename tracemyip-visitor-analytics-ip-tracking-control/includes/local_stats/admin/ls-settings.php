@@ -106,10 +106,13 @@ class TMIP_Local_Stats_Settings {
 		// Show transient notices
 		$notice = get_transient('tmip_admin_notice');
 		if ($notice) {
-			$class = ($notice['type'] === 'success') ? 'notice-success tmip-notice-success' : 'notice-error tmip-notice-error';
+			$class = isset($notice['class']) ? $notice['class'] : 'tmip-notice tmip-notice-' . $notice['type'];
 			?>
-			<div class="notice <?php echo $class; ?> is-dismissible tmip-admin-notice">
+			<div class="<?php echo esc_attr($class); ?> is-dismissible">
 				<p><strong><?php echo esc_html($notice['message']); ?></strong></p>
+				<button type="button" class="tmip-notice-dismiss">
+					<span class="screen-reader-text"><?php _e('Dismiss this notice.', 'tracemyip-local-stats'); ?></span>
+				</button>
 			</div>
 			<?php
 			delete_transient('tmip_admin_notice');
@@ -1586,7 +1589,8 @@ class TMIP_Local_Stats_Settings {
 			// Store message in transient for display after redirect
 			set_transient('tmip_admin_notice', [
 				'type' => 'success',
-				'message' => __('Settings reset completed successfully! The dashboard widget has been moved to the top position.', 'tracemyip-local-stats')
+				'message' => __('Settings reset completed successfully! The dashboard widget has been moved to the top position.', 'tracemyip-local-stats'),
+    			'class' => 'tmip-notice tmip-notice-success'
 			], 45);
 
 			// Redirect to refresh page and show message

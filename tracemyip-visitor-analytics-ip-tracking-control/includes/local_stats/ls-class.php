@@ -244,7 +244,7 @@ class TMIP_Local_Stats {
 		}
 
 		?>
-		<div class="notice notice-warning tmip-cache-notice is-dismissible">
+		<div class="tmip-notice tmip-notice-warning tmip-cache-notice is-dismissible">
 			<p>
 				<span class="dashicons dashicons-warning" style="color: #dba617; margin-right: 10px;"></span>
 				<?php echo $message; ?>
@@ -831,7 +831,8 @@ class TMIP_Local_Stats {
 			// Store success message in transient
 			set_transient('tmip_admin_notice', [
 				'type' => 'success',
-				'message' => __('All tracking data has been deleted successfully! Tables have been recreated and the dashboard widget has been moved to the top position.', 'tracemyip-local-stats')
+				'message' => __('All tracking data has been deleted successfully! Tables have been recreated and the dashboard widget has been moved to the top position.', 'tracemyip-local-stats'),
+    			'class' => 'tmip-notice tmip-notice-success'
 			], 45);
 
 			return true;
@@ -842,7 +843,8 @@ class TMIP_Local_Stats {
 			// Store error message in transient
 			set_transient('tmip_admin_notice', [
 				'type' => 'error',
-				'message' => __('Failed to delete data. Please try again.', 'tracemyip-local-stats')
+				'message' => __('Failed to delete data. Please try again.', 'tracemyip-local-stats'),
+    			'class' => 'tmip-notice tmip-notice-success'
 			], 45);
 
 			return false;
@@ -984,7 +986,8 @@ class TMIP_Local_Stats {
 					$views_deleted,
 					$post_stats_deleted,
 					$daily_stats_deleted
-				)
+				),
+    			'class' => 'tmip-notice tmip-notice-success'
 			], 45);
 
 			return true;
@@ -1000,7 +1003,8 @@ class TMIP_Local_Stats {
 			// Store error message in transient
 			set_transient('tmip_admin_notice', [
 				'type' => 'error',
-				'message' => __('Failed to clean up old data. Please try again.', 'tracemyip-local-stats')
+				'message' => __('Failed to clean up old data. Please try again.', 'tracemyip-local-stats'),
+    			'class' => 'tmip-notice tmip-notice-success'
 			], 45);
 
 			return false;
