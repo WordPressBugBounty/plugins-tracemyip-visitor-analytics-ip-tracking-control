@@ -4,7 +4,7 @@ Tags: visitor tracking, ip tracker, visitor stats, website analytics, statistics
 Requires at least: 2.0.4
 Tested up to: 6.8
 Requires PHP: 7.2
-Stable tag: 2.68
+Stable tag: 2.69
 License: GPLv2 (or later)
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://www.paypal.com/donate/?hosted_button_id=TND7BL8C3KFEW
@@ -18,7 +18,7 @@ Comprehensive visitor IP tracking and website analytics solution with real-time 
 Embed a tracker code into your site and access full-featured analytics via the TraceMyIP SaaS console — integrated directly within your WordPress admin.
 
 **2. Local "UnFiltered Stats" Tracker**
-A standalone, compact tracking system that logs visitor activity directly inside your WordPress dashboard, with no external connections required to log the page views.
+A standalone, compact tracking system that logs visitor activity directly inside your WordPress dashboard, with no external connections required to log the page views. It also captures data that other website statistics services may not be able to detect due to web tracker blockers.
 
 == FEATURE HIGHLIGHTS ==
 * **All your sites. No-Delays stats. All on the primary SaaS dashboard.**
@@ -68,6 +68,8 @@ IP address data can be matched with other statistics platforms and tagged to rev
 == Why Choose Trace My IP? ==
 
 **Optimized for accuracy:** Captures genuine user interactions while excluding bots, scrapers, and artificial traffic. Our advanced **IP tracker** provides the most reliable **visitor statistics** available.
+
+**Delivers TWO tracking systems in ONE:** Logs **all** visits — even those that are normally invisible due to the use of proxy scripts, ad blockers, and website tracker blockers.
 
 **Complete visitor insights:** From basic **page views counter** to advanced **website analytics**, get all the data you need in one powerful plugin.
 
@@ -230,10 +232,17 @@ With the IP tracking address book, you can effortlessly scan through all project
 
 == Changelog ==
 
+= Version 2.69 =
+- Optimized UnFiltered Stats settings panel
+- Adjusted Raw Access IP panel sorting to prioritize recently active IPs over the most active ones
+- Added [Last 30 Days] option for UnFiltered stats Most Active IPs Panel
+- Changed show recent Hits in last minutes to default to 60 minutes
+- Removed Hits count row from non related post-types
+
 = Version 2.68 =
 - NEW! UnFiltered Stats Module tracking system for WordPress (BETA Release)
   (Feature set is subject to changes at any time)
-- Omptimized the SaaS primary console responsiveness
+- Optimized the SaaS primary console responsiveness
 - Integration of UnFiltered Stats module with SaaS tracking
 - Added options to selectively enable UnFiltered Stats dashboard widgets
 - Added Bitcoin payments support for premium subscriptions

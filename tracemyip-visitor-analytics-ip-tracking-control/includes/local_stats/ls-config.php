@@ -41,6 +41,9 @@ class TMIP_Local_Stats_Config {
 	const DB_VERSION = '1.2';
 	const DB_VERSION_OPTION = 'tmip_lc_db_version';
 	
+	// Additional option IDs
+	const tmip_lc_total_logged_views_const = 'tmip_lc_total_logged_views'; // Total lifetime UnFiltered Stats logged pageviews
+	
     
 	const MAX_USER_AGENT_LENGTH = 255;
     const PLACEHOLDER_IP = '0.0.0.0';
@@ -265,7 +268,7 @@ class TMIP_Local_Stats_Config {
 		
 		'recent_views_minutes' => [
             'section' => 'dashboard',
-            'default' => 15,
+            'default' => 60,
             'type' => 'integer',
             'min' => 1,
             'max' => 60
@@ -358,6 +361,7 @@ class TMIP_Local_Stats_Config {
 				'72h' => 'Last 72 Hours',
 				'week' => 'This Week',
 				'7days' => 'Last 7 Days',
+				'30days' => 'Last 30 Days',
 				'month' => 'This Month'
 			],
 			'required_days' => [

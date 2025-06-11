@@ -4,14 +4,14 @@ defined('ABSPATH') || exit;
 	Plugin Name: An Official TraceMyIP Tracker with email alerts
 	Plugin URI: https://www.tracemyip.org
 	Description: Website visitor IP address activity tracking, IP analytics, visitor email alerts, IP changes tracker and visitor IP address blocking. UnFiltered post stats dashboard. Tag visitors IPs, count and track post views, schedule email alerts, control and manage pages, links and protect contact forms. GDPR options.
-	Version: 2.68
+	Version: 2.69
 	Author: TraceMyIP.org
 	Author URI: https://www.TraceMyIP.org
 	Text Domain: tracemyip-local-stats
 	License: GPLv2 (or later)
 	License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
-if (!defined('TMIP_VERSION') ) 		define('TMIP_VERSION', '2.68');
+if (!defined('TMIP_VERSION') ) 		define('TMIP_VERSION', '2.69');
 
 ### SET CONSTANTS ############################################
 // header('X-XSS-Protection:0');
@@ -79,8 +79,9 @@ add_action('wp_head', 		'tmip_addToTags');
 ### MODULES ############################################
 # 052125092856
 // USER NOTICES: Reset by $tmip_notices_debug
+$tmip_if_plugin_upgrate=(isset($_GET['action']) && $_GET['action'] === 'do-plugin-upgrade' && strpos($_SERVER['REQUEST_URI'], 'update-core.php') !== false);
 $tmipSysNTF=tmip_plugin_path . 'includes/classes/class-tmip-system-notices.php';
-if (tmip_enable_user_notices==1 and file_exists($tmipSysNTF)) {
+if (empty($tmip_if_plugin_upgrate) and tmip_enable_user_notices==1 and file_exists($tmipSysNTF)) {
     include_once($tmipSysNTF);
     new TMIPSystemNotices();
     // Reset notification statuses

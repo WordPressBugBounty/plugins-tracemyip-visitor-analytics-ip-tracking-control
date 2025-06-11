@@ -472,76 +472,81 @@ function tmip_admin_init() {
 		return 0;
 	}
 }
-function tmip_insert_visitor_tracker() {
+function tmip_insert_visitor_tracker($log_activity_only=0) {
     $code=get_option(tmip_visit_tracker_opt);
-	
+
 	$successVTC=0;
 	$res=array();
 	
     if ($code and strpos($code,'4684NR-IPIB') !== false) {
-		$code=stripslashes($code);
-		$code=str_replace('src="//https:','src="',$code);
-		$code=str_replace('src="//http:','src="',$code);
-		$code=str_replace('src="https:','src="',$code);
-		$code=str_replace('src="http:','src="',$code);
 		
-		// Convert an HTML code to JavaScript code in real time
-		if (tmip_html_to_js_format_realti==1 and $code and 
-				strpos($code,'<script')==false and strpos($code,'rgtype=4684NR')==false) {
-			// Extract tracker code
-			$input=array();
-			$input['code_source']=$code;
-			$input['code_tag']='img';
-			$r=tmip_get_html_tag_string($input);
-			$tmip_tag_attributes=$r[1]['tag_attributes'];
-			$tmip_code_source=$r['code_source'];
+		if ($log_activity_only !==1 ) {
+			$code=stripslashes($code);
+			$code=str_replace('src="//https:','src="',$code);
+			$code=str_replace('src="//http:','src="',$code);
+			$code=str_replace('src="https:','src="',$code);
+			$code=str_replace('src="http:','src="',$code);
 
-			// Check and convert the tracker code
-			if ($tmip_tag_attributes and $tmip_code_source) {
+			// Convert an HTML code to JavaScript code in real time
+			if (tmip_html_to_js_format_realti==1 and $code and 
+					strpos($code,'<script')==false and strpos($code,'rgtype=4684NR')==false) {
+				// Extract tracker code
 				$input=array();
-				$input['convert_mode']=1; // 1-realtime, 2-on submit
-				$input['code_source']=$tmip_code_source;
-				$input['tag_attributes']=$tmip_tag_attributes;
-				$res=tmip_convert_html_code_to_javascript($input);
-				$successVTC=$res['success'];
-				if ($successVTC) $code=$res['code_tracker'];
-			}
-		}
-		
-		$add_remove_async=0; // 1-Add if does not exist, 2-Remove if exists
-		$pos_val=get_option(tmip_position_val);
-		
-		// Header Async - set tracker image enclosing div font-size to 0 to prevent line space for invisible tracker option
-		if ($pos_val and $pos_val==='header_async') {
-			$code=tmip_strip_divs($code);
-			$reduce_line_height='lgUrl.php?gustInvT=fzize0';
-			if (!stristr($code,$reduce_line_height)) {
-				$code=str_replace('lgUrl.php?',$reduce_line_height.'&amp;',$code);
-			}
-			$add_remove_async=1;
-			
-		// Header no async to show tracker in center header
-		} elseif ($pos_val and $pos_val==='header') {
-			$add_remove_async=2;
-			
-		// Footer async
-		} elseif (tmip_trk_add_async_attr===1) {
-			$add_remove_async=1;
-		}
+				$input['code_source']=$code;
+				$input['code_tag']='img';
+				$r=tmip_get_html_tag_string($input);
+				$tmip_tag_attributes=$r[1]['tag_attributes'];
+				$tmip_code_source=$r['code_source'];
 
-		$is_async_code=0;	// 1-is async, 2-is not async
-		if (strpos($code,'<script')==true) { if (stristr($code,' async ')) $is_async_code=1; else $is_async_code=2;  }
-		if ($add_remove_async==1 and $is_async_code==2) $code=str_replace('<script','<script async',$code);	// Add async
-		if ($add_remove_async==2 and $is_async_code==1) $code=str_replace('<script async','<script',$code);	// Remove async
+				// Check and convert the tracker code
+				if ($tmip_tag_attributes and $tmip_code_source) {
+					$input=array();
+					$input['convert_mode']=1; // 1-realtime, 2-on submit
+					$input['code_source']=$tmip_code_source;
+					$input['tag_attributes']=$tmip_tag_attributes;
+					$res=tmip_convert_html_code_to_javascript($input);
+					$successVTC=$res['success'];
+					if ($successVTC) $code=$res['code_tracker'];
+				}
+			}
+
+			$add_remove_async=0; // 1-Add if does not exist, 2-Remove if exists
+			$pos_val=get_option(tmip_position_val);
+
+			// Header Async - set tracker image enclosing div font-size to 0 to prevent line space for invisible tracker option
+			if ($pos_val and $pos_val==='header_async') {
+				$code=tmip_strip_divs($code);
+				$reduce_line_height='lgUrl.php?gustInvT=fzize0';
+				if (!stristr($code,$reduce_line_height)) {
+					$code=str_replace('lgUrl.php?',$reduce_line_height.'&amp;',$code);
+				}
+				$add_remove_async=1;
+
+			// Header no async to show tracker in center header
+			} elseif ($pos_val and $pos_val==='header') {
+				$add_remove_async=2;
+
+			// Footer async
+			} elseif (tmip_trk_add_async_attr===1) {
+				$add_remove_async=1;
+			}
+
+			$is_async_code=0;	// 1-is async, 2-is not async
+			if (strpos($code,'<script')==true) { if (stristr($code,' async ')) $is_async_code=1; else $is_async_code=2;  }
+			if ($add_remove_async==1 and $is_async_code==2) $code=str_replace('<script','<script async',$code);	// Add async
+			if ($add_remove_async==2 and $is_async_code==1) $code=str_replace('<script async','<script',$code);	// Remove async
+
+			$js_conversion=NULL;
+			if ($successVTC) $js_conversion=tmip_stats_optimi_pagntra; elseif ($res and $res['alerts']) $js_conversion=$res['alerts'];
+			echo $code;
+		}
 		
-		$js_conversion=NULL;
-		if ($successVTC) $js_conversion=tmip_stats_optimi_pagntra; elseif ($res and $res['alerts']) $js_conversion=$res['alerts'];
-		if (!tmip_is_front_end_page()) tmip_log_stat_data(array('type'=>'vis_tr_query','js_conversion'=>$js_conversion));
-		
-		echo $code;
+		if (!tmip_is_front_end_page() or $log_activity_only===1) tmip_log_stat_data(array('type'=>'vis_tr_query','js_conversion'=>$js_conversion));
     }
 	
-	if (!tmip_is_front_end_page()) tmip_log_stat_data(array('type'=>'page_request_query'));
+	// Log total tracker code requests. If UnFiltered Stats is enabled, stats be logged by ajax in [0611251243] as caching plugins prevent PHP funcion executions
+	$v=(defined('tmip_enable_local_tracker_ops') and tmip_enable_local_tracker_ops==1) ? 1 : 0;
+	if ($v !==1 and (!tmip_is_front_end_page() or $log_activity_only===1)) tmip_log_stat_data(array('type'=>'page_request_query'));
 }
 function tmip_strip_divs($html) {
     $dom = new DOMDocument();
@@ -913,8 +918,8 @@ function tmip_convert_html_code_to_javascript($input,$returnrs=NULL) {
 	$output['success']=trim($success);
 	$output['alerts']=implode('<br>',$alerts);
 	$output['comments']=implode('<br>',$comments);
-	$output['code_tracker']=trim($code);
-	$output['code_preview']=htmlentities($code);
+	$output['code_tracker']=trim($code ?? '');
+	$output['code_preview']=htmlentities($code ?? '');
 	if (isset($returnrs)) return $output[$returnrs]; else return $output;
 }
 
@@ -924,11 +929,11 @@ function tmip_alert_box($input) {
 	if ($comments[0])	$_comments=trim($comments[0]); 	elseif ($comments[1])	$_comments=trim($comments[1]);
 	//$codeAlert_title=tmip_settings_hv_updated;
 	if (!isset($output)) $output='';
-	$output .='<div class="'.$box_class.'">';
-	if ($_title)				$output .='<p class="'.$title_class.'">'.$_title.'</p>';
+	$output .='<div id="tmip_tdiv_id_927" class="'.$box_class.'">';
+	if ($_title)				$output .='<p id="tmip_par_id_1" class="'.$title_class.'">'.$_title.'</p>';
 	if ($_title and $_comments)	$output .='<hr>';
 	if ($_comments)				$output .=$_comments;
-	$output .='</div><br>';
+	$output .='</div>';
 	return $output;
 }
 
@@ -986,7 +991,7 @@ function tmip_settings_page() {
 	$tmip_genert_nonce=wp_create_nonce(plugin_basename(__FILE__));
 	$tmip_verify_nonce=wp_verify_nonce($tmip_posted_nonce,plugin_basename(__FILE__));
 	if ($info_update and $tmip_posted_nonce and $tmip_verify_nonce<>1) {
-		$codeAlert_red_text .='<div class="tmip_alert_subtitle">'.tmip_fa__hand_point_right_lg.' '.tmip_invalid_nonce_check.'</div><br>';
+		$codeAlert_red_text .='<div id="tmip_tdiv_id_989" class="tmip_alert_subtitle">'.tmip_fa__hand_point_right_lg.' '.tmip_invalid_nonce_check.'</div><br>';
 		$failedNonceCheck=1;
 	}
 	// tmip_log_stat_data(array('type'=>'reset_all_data')); // reset all stats data, leave the codes
@@ -1037,7 +1042,7 @@ function tmip_settings_page() {
 		$visTRpsDbVar=!empty($postVarVisTr) ? $postVarVisTr : get_option(tmip_visit_tracker_opt);
 		// Project visitor tracker code is not placed
 		if (!$visTRpsDbVar) {
-			$codeAlert_red_text .='<div class="tmip_alert_subtitle">'.tmip_fa__hand_point_right_lg.' '.tmip_no_code_entered_alr.'</div><br>';
+			$codeAlert_red_text .='<div id="tmip_tdiv_id_1040" class="tmip_alert_subtitle">'.tmip_fa__hand_point_right_lg.' '.tmip_no_code_entered_alr.'</div><br>';
 			// Page tracker code is installed, but visitor tracker is not
 			if ($pagtracker_db_source_code) {
 				$postDBPageTCnp=83122013858;
@@ -1045,7 +1050,7 @@ function tmip_settings_page() {
 			if (empty($postVarVisTr) and $info_update) {
 				$proceedToUpdate=10; // Alow to clear the code input box
 			} else {
-				//$codeAlert_red_text .='<div class="tmip_alert_subtitle">'.tmip_fa__hand_point_right_lg.' '.tmip_no_code_entered_alr.'</div><br>';
+				//$codeAlert_red_text .='<div id="tmip_tdiv_id_1048" class="tmip_alert_subtitle">'.tmip_fa__hand_point_right_lg.' '.tmip_no_code_entered_alr.'</div><br>';
 			}
 
 		// Project code contains page tracker code
@@ -1053,7 +1058,7 @@ function tmip_settings_page() {
 			if (empty($postVarVisTr) and $info_update) {
 				$proceedToUpdate=11;
 			} else {
-				$codeAlert_red_text .='<div class="tmip_alert_subtitle">'.tmip_fa__hand_point_right_lg.' '.tmip_pagetr_into_vistrak.'</div><br>';
+				$codeAlert_red_text .='<div id="tmip_tdiv_id_1056" class="tmip_alert_subtitle">'.tmip_fa__hand_point_right_lg.' '.tmip_pagetr_into_vistrak.'</div><br>';
 				$haltUpdate='hu_visitor_tracker_1';
 			}
 
@@ -1062,9 +1067,9 @@ function tmip_settings_page() {
 			if (empty($postVarVisTr) and $info_update) {
 				$proceedToUpdate=12;
 			} else {
-				$codeAlert_red_text .='<div class="tmip_alert_subtitle">'.tmip_fa__hand_point_right_lg.' '.tmip_tracker_code_ent_nv.'</div>';
+				$codeAlert_red_text .='<div id="tmip_tdiv_id_1064" class="tmip_alert_subtitle">'.tmip_fa__hand_point_right_lg.' '.tmip_tracker_code_ent_nv.'</div>';
 				$v=str_replace('%ERR_NUM%','ER-0423200718',tmip_prov_trk_code_notva);
-				$codeAlert_red_text .='<p class="tmip_alert_comments">'.$v.'</p>';
+				$codeAlert_red_text .='<p id="tmip_par_id_2" class="tmip_alert_comments">'.$v.'</p>';
 				$haltUpdate='hu_visitor_tracker_2';
 			}
 		}
@@ -1098,16 +1103,16 @@ function tmip_settings_page() {
 				$successVTC=$res['success'];
 
 				if ($info_update and $successVTC and $postVarVisTr) {
-					$codeAlert_green_text .='<div class="tmip_alert_subtitle">'.tmip_fa_checkmark_lg.' '.$res['alerts'].'</div>';
+					$codeAlert_green_text .='<div id="tmip_tdiv_id_1101" class="tmip_alert_subtitle">'.tmip_fa_checkmark_lg.' '.$res['alerts'].'</div>';
 					if (tmip_html_to_js_format_onsubm==1) {
 						$postVarVisTr=$res['code_tracker'];
 					}
 				} elseif (!$successVTC) {
 					$haltUpdate='hu_visitor_tracker_3';
-					$codeAlert_red_text .='<div class="tmip_alert_subtitle">'.tmip_fa__hand_point_right_lg.' '.$res['alerts'].'</div>';
+					$codeAlert_red_text .='<div id="tmip_tdiv_id_1107" class="tmip_alert_subtitle">'.tmip_fa__hand_point_right_lg.' '.$res['alerts'].'</div>';
 				}
 				if ($info_update and $successVTC and $postVarVisTr) {
-					$codeAlert_green_text .='<p class="tmip_alert_comments">'.$res['comments'].'</p>';
+					$codeAlert_green_text .='<p id="tmip_par_id_3" class="tmip_alert_comments">'.$res['comments'].'</p>';
 					$proceedToUpdate=$res['success']; // $proceedToUpdate=2;
 				}
 			}
@@ -1132,11 +1137,11 @@ function tmip_settings_page() {
 		$noChanges[]=1;
 	} else {
 		if (!$postVarVisTr and $info_update) {
-			//$codeAlert_red_text .='<div class="tmip_alert_subtitle">'.tmip_fa__hand_point_right_lg.' '.tmip_no_code_entered_alr.'</div><br>';
+			//$codeAlert_red_text .='<div id="tmip_tdiv_id_1135" class="tmip_alert_subtitle">'.tmip_fa__hand_point_right_lg.' '.tmip_no_code_entered_alr.'</div><br>';
 		} elseif ($postVarVTpos and strpos($postVarVTpos,'header')!== false) {
-			$codeAlert_green_text .='<div class="tmip_alert_subtitle">'.tmip_fa__hand_point_right_lg.' '.tmip_vistr_set_to_headA.'</div><br>';
+			$codeAlert_green_text .='<div id="tmip_tdiv_id_1137" class="tmip_alert_subtitle">'.tmip_fa__hand_point_right_lg.' '.tmip_vistr_set_to_headA.'</div><br>';
 		} elseif ($postVarVTpos and strpos($postVarVTpos,'footer')!== false) {
-			$codeAlert_green_text .='<div class="tmip_alert_subtitle">'.tmip_fa__hand_point_right_lg.' '.tmip_vistr_set_to_footA.'</div><br>';
+			$codeAlert_green_text .='<div id="tmip_tdiv_id_1139" class="tmip_alert_subtitle">'.tmip_fa__hand_point_right_lg.' '.tmip_vistr_set_to_footA.'</div><br>';
 		}
 	}
 	
@@ -1160,7 +1165,7 @@ function tmip_settings_page() {
 		if (empty($postVarPagTr) and $info_update) {
 			$proceedToUpdate=20;
 		} else {
-			$codeAlert_red_text .='<div class="tmip_alert_subtitle">'.tmip_fa__hand_point_right_lg.' '.tmip_vistrk_into_pagetrk.'</div><br>';
+			$codeAlert_red_text .='<div id="tmip_tdiv_id_1163" class="tmip_alert_subtitle">'.tmip_fa__hand_point_right_lg.' '.tmip_vistrk_into_pagetrk.'</div><br>';
 			$haltUpdate='hu_page_tracker_1';
 		}
 	
@@ -1172,7 +1177,7 @@ function tmip_settings_page() {
 		if (empty($postVarPagTr) and $info_update) {
 			$proceedToUpdate=21;
 		} else {
-			$codeAlert_red_text .='<div class="tmip_alert_subtitle">'.tmip_fa__hand_point_right_lg.' '.tmip_pagetr_code_notjava.'</div><br>';
+			$codeAlert_red_text .='<div id="tmip_tdiv_id_1175" class="tmip_alert_subtitle">'.tmip_fa__hand_point_right_lg.' '.tmip_pagetr_code_notjava.'</div><br>';
 			$haltUpdate='hu_page_tracker_2';
 		}
 	// Page Tracker code is not valid
@@ -1180,8 +1185,8 @@ function tmip_settings_page() {
 		if (empty($postVarPagTr) and $info_update) {
 			$proceedToUpdate=22;
 		} else {
-			$codeAlert_red_text .='<div class="tmip_alert_subtitle">'.tmip_fa__hand_point_right_lg.' '.tmip_pagetr_cd_not_valid.'</div>';
-			$codeAlert_red_text .='<p class="tmip_alert_comments">'.tmip_pagetr_generate_npl.'</p>';
+			$codeAlert_red_text .='<div id="tmip_tdiv_id_1183" class="tmip_alert_subtitle">'.tmip_fa__hand_point_right_lg.' '.tmip_pagetr_cd_not_valid.'</div>';
+			$codeAlert_red_text .='<p id="tmip_par_id_4" class="tmip_alert_comments">'.tmip_pagetr_generate_npl.'</p>';
 			$haltUpdate='hu_page_tracker_3';
 		}
 	// No changes in Visitor Tracker code on submit
@@ -1192,12 +1197,12 @@ function tmip_settings_page() {
 	// Page Tracker code valid and entered into DB
 	} elseif ($postVarPagTr and $pagTRpsDbVar) {
 		$proceedToUpdate=23;
-		$codeAlert_green_text .='<div class="tmip_alert_subtitle">'.tmip_fa_checkmark_lg.' '.tmip_prov_trackerp_valid.'</div>';
+		$codeAlert_green_text .='<div id="tmip_tdiv_id_1195" class="tmip_alert_subtitle">'.tmip_fa_checkmark_lg.' '.tmip_prov_trackerp_valid.'</div>';
 	}
 	
 	// Page Tracker code is installed but the visitor tracker is not posted
 	if ((!$info_update and $postDBPageTCnp==83122013858) or (!$postVarVisTr and $postVarPagTr)) {
-		$codeAlert_red_text .='<div class="tmip_alert_subtitle">'.tmip_fa__hand_point_right_lg.' '.tmip_pagetr_no_vis_tralrt.'</div>';
+		$codeAlert_red_text .='<div id="tmip_tdiv_id_1200" class="tmip_alert_subtitle">'.tmip_fa__hand_point_right_lg.' '.tmip_pagetr_no_vis_tralrt.'</div>';
 	}
 	
 
@@ -1216,7 +1221,7 @@ function tmip_settings_page() {
 			}
 			if (!$postVarVisTr) {
 				$codeAlert_neutralTitle=tmip_settings_hv_updated;
-				$codeAlert_neutral_text .='<div class="tmip_alert_subtitle">'.tmip_fa__hand_point_right_lg.' '.tmip_vistr_cd_not_valid.'</div>';
+				$codeAlert_neutral_text .='<div id="tmip_tdiv_id_1219" class="tmip_alert_subtitle">'.tmip_fa__hand_point_right_lg.' '.tmip_vistr_cd_not_valid.'</div>';
 			}
 		}
 		// Remove page tracker code
@@ -1227,7 +1232,7 @@ function tmip_settings_page() {
 			}
 			if (!$postVarPagTr) {
 				$codeAlert_neutralTitle=tmip_settings_hv_updated;
-				$codeAlert_neutral_text .='<div class="tmip_alert_subtitle">'.tmip_fa__hand_point_right_lg.' '.tmip_pagtr_cd_not_valid.'</div>';
+				$codeAlert_neutral_text .='<div id="tmip_tdiv_id_1230" class="tmip_alert_subtitle">'.tmip_fa__hand_point_right_lg.' '.tmip_pagtr_cd_not_valid.'</div>';
 			}
 		}
 		
@@ -1274,7 +1279,7 @@ function tmip_settings_page() {
 	
 		if (is_array($noChanges) and count($noChanges)==3) {
 			$codeAlert_neutralTitle=tmip_settings_no_changes;
-			$codeAlert_neutral_text .='<div class="tmip_alert_subtitle">'.tmip_fa__hand_point_right_lg.' '.tmip_settings_reman_same.'</div>';
+			$codeAlert_neutral_text .='<div id="tmip_tdiv_id_1277" class="tmip_alert_subtitle">'.tmip_fa__hand_point_right_lg.' '.tmip_settings_reman_same.'</div>';
 			if ($vistracker_db_source_code) {
 				$show_div_target=array('sec_rate','sec_settings');
 			}
@@ -1414,7 +1419,7 @@ function tmip_settings_page() {
 		}
 		
 		$output .='<br><br><br>';
-		$output .='<div id="tmip_sett_wrap_2"><div style="float:right;">v'.TMIP_VERSION.'</div>';
+		$output .='<div id="tmip_sett_wrap_2"><div id="tmip_tdiv_id_1417" style="float:right;">v'.TMIP_VERSION.'</div>';
 	
 			$output .='<form method="post" action="'.$tmip_plugin_sett_url.'">';
 			$output .=wp_nonce_field( 'update_tmip_visit_tracker_nonce', 'tmip_visit_tracker_nonce' );
@@ -1737,7 +1742,7 @@ function tmip_show_array_notice( $data, $type = 'success',$fullpath = 0 ) {
 
     add_action( 'admin_notices', function() use ( $data, $type, $file, $line ) {
         $type = in_array( $type, [ 'success', 'error', 'warning', 'info' ] ) ? $type : 'info';
-        echo '<div class="notice notice-' . esc_attr( $type ) . '"><pre>';
+        echo '<div id="tmip_tdiv_id_1740" class="notice notice-' . esc_attr( $type ) . '"><pre>';
         echo esc_html( print_r( $data, true ) );
         echo "\n\nCalled at: " . esc_html( $file ) . ':' . esc_html( $line );
         echo '</pre></div>';

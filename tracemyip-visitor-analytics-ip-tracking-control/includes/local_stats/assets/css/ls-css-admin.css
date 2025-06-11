@@ -338,6 +338,8 @@
     margin: 0;
     list-style: none;
     position: relative;
+	max-height: 252px; /* same for tmip-top-content-list */
+	overflow-y: auto;
 }
 
 .tmip-column-names {
@@ -1111,6 +1113,10 @@ li#toplevel_page_tmip_admpanel_menu ul li:hover a {
     animation: tmip-spin 2s linear infinite;
     z-index: 1;
 }
+@keyframes tmip-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
 
 .tmip-copy-tooltip {
     position: fixed;
@@ -1138,7 +1144,7 @@ li#toplevel_page_tmip_admpanel_menu ul li:hover a {
 .tmip-top-content-list {
     margin: 0;
     list-style: none;
-    max-height: 252px;
+    max-height: 252px; /* same for tmip-active-ips-list */
     overflow-y: auto;
 }
 
@@ -1269,26 +1275,84 @@ li#toplevel_page_tmip_admpanel_menu ul li:hover a {
     font-size: 12px;
 }
 
+/* Pagination buttons */
 .tmip-page-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 8px;
+    background: #D8F1FF;
+    border: 1px solid #2271b1;
+    border-radius: 3px;
     color: #2271b1;
     text-decoration: none;
-    padding: 4px 8px;
-    border-radius: 3px;
-    transition: all 0.2s ease;
+    font-size: 13px;
+    line-height: 1;
+    min-height: 20px;
     cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 0 #2271b1;
 }
+
 
 .tmip-page-link:not(.disabled):hover {
     background: #f0f0f1;
+    border-color: #135e96;
     color: #135e96;
 }
 
 .tmip-page-link.disabled {
     color: #a7aaad;
+    border-color: #dcdcde;
+    background: #f6f7f7;
+    box-shadow: none;
     cursor: default;
-    opacity: 0.5;
+    opacity: 0.65;
+    pointer-events: none;
 }
 
+/* Hover and active states */
+.tmip-page-link:not(.disabled):hover {
+    background: #f0f0f1;
+    border-color: #0a4b78;
+    color: #0a4b78;
+}
+
+.tmip-page-link:not(.disabled):active {
+    background: #f0f0f1;
+    border-color: #0a4b78;
+    box-shadow: inset 0 2px 5px -3px rgba(0, 0, 0, 0.5);
+    transform: translateY(1px);
+}
+
+
+
+
+/* Responsive styles */
+@media screen and (max-width: 782px) {
+    .tmip-pagination {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .tmip-page-counter {
+        width: 100%;
+        text-align: center;
+        order: -1;
+    }
+
+    .tmip-page-link {
+        flex: 1;
+        text-align: center;
+        min-width: 100px;
+    }
+}
+
+
+.tmip-page-counter {
+    color: #646970;
+    font-size: 12px;
+}
 
 /*======================
 = Responsive Design   =
@@ -1328,6 +1392,9 @@ li#toplevel_page_tmip_admpanel_menu ul li:hover a {
     }
 
     .tmip-top-content-list {
+        max-height: 192px;
+    }
+	.tmip-active-ips-list {
         max-height: 192px;
     }
 

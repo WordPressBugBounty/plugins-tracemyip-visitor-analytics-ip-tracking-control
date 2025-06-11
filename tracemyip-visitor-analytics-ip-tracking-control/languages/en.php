@@ -19,7 +19,7 @@ define("tmip_userguide_url", 		tmip_service_url.'/learn/?wp_plugin=wpmenu_user_g
 define("tmip_support_url", 			tmip_service_url.'/contact.htm');
 define("tmip_acc_upgr_url", 		tmip_service_url.'/members/index.php?rnDs=1&page=spm_checkout&type=ssub&stp=acup&wplk_pro_upgrade=20423014510');
 
-// URLS
+// URLSonsider purging the cache to ensure the tracki
 define("tmip_support_link", 		tmip_link(tmip_support_url,'<b>'.tmip_support_url.'</b>'));
 define("tmip_lrn_invtrk_url", 		tmip_learnbl_url.'how-to-make-a-visitor-tracker-invisible-91/?wpp=wp_plugin_settings_page');
 define("tmip_wp_plugin_review", 	'https://wordpress.org/support/plugin/tracemyip-visitor-analytics-ip-tracking-control/reviews/?rate=5#new-post');
@@ -99,7 +99,7 @@ define("tmip_prov_trk_code_notva", 	'The tracker code you have provided is not v
 define("tmip_check_trk_code_inst", 	"<b>Verify that the tracker image now appears on <u>all</u> of your pages</b>.
 <br>If you need a hidden version of the tracker, login to your ".tmip_service_Dname." account. Click on the [edit] link located to the right of your project name on [My Projects] page, scroll down and enable the [Invisible Tracker] option.
 
-<hr>* <b>If you're using a page cache plugin or optimization plugins</b>, consider purging the cache to ensure the tracking program loads correctly. If the tracker image remains absent on your pages, you might need to temporarily disable your cache or optimization plugins to diagnose the issue. Once identified, adjust the configuration settings within those plugins to allow the tracker code to load properly.");
+<div style='background-color:#FAA;border:2px dashed #333;border-radius:8px;padding:15px;'><b>IMPORTANT! If you're using a page cache plugin or optimization plugins</b>, please <b><u>clear the cache</u></b> to ensure the code is updated correctly. If the tracker image remains absent on your pages, you might need to temporarily disable your cache or optimization plugins to diagnose the issue. Once identified, adjust the configuration settings within those plugins to allow the tracker code to load properly.<div>");
 
 define("tmip_prov_trackerp_valid", 	'The <b>Page Tracker</b> code has been installed');
 

@@ -970,6 +970,13 @@ class TMIP_Local_Stats_Dashboard {
 					$limit
 				);
 				break;
+			case '30days':
+				$start_date = date('Y-m-d H:i:s', strtotime($current_time . ' -30 days'));
+				$title = sprintf(
+					__('%d Most Active IPs (Last 30 Days)', 'tracemyip-local-stats'),
+					$limit
+				);
+				break;
 			case 'month':
 				$start_date = date('Y-m-01 00:00:00', strtotime($current_time));
 				$title = sprintf(
@@ -1000,21 +1007,21 @@ class TMIP_Local_Stats_Dashboard {
 
         // Modified query to correctly count hits within timeframe
         $results = $wpdb->get_results($wpdb->prepare(
-			"SELECT 
-				user_ip,
-				COUNT(*) as requests,
-				MAX(view_date) as last_activity,
-				MAX(is_bot) as is_bot  /* Changed from BOOL_OR to MAX */
-			 FROM {$wpdb->prefix}tmip_lc_views 
-			 WHERE view_date BETWEEN %s AND %s
-			 GROUP BY user_ip 
-			 ORDER BY requests DESC, last_activity DESC 
-			 LIMIT %d OFFSET %d",
-			$start_date,
-			$current_time,
-			$limit,
-			$offset
-		));
+    "SELECT 
+        user_ip,
+        COUNT(*) as requests,
+        MAX(view_date) as last_activity,
+        MAX(is_bot) as is_bot
+     FROM {$wpdb->prefix}tmip_lc_views 
+     WHERE view_date BETWEEN %s AND %s
+     GROUP BY user_ip 
+     ORDER BY requests DESC, last_activity DESC 
+     LIMIT %d OFFSET %d",
+    $start_date,
+    $current_time,
+    $limit,
+    $offset
+));
 		
 		if (defined('TMIP_UF_DEBUG') && TMIP_UF_DEBUG) {
             error_log("TMIP Debug - Active IPs Query: " . $wpdb->last_query);

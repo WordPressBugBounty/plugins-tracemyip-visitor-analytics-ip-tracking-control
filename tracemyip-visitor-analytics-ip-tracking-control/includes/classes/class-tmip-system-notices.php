@@ -175,10 +175,10 @@ class TMIPSystemNotices {
                 }
             }
 
-            // Check minimum total site front end requests
+            // Check minimum total UnFiltered Stats logged views
             $min_fe_req = isset($notice['min_fe_req']) ? $notice['min_fe_req'] : $this->settings['min_fe_req'];
-            if ($min_fe_req > 0 && !$this->has_min_front_end_req($min_fe_req)) {
-                $tr_action[]='Check minimum site front-end requests: '.$this->has_min_front_end_req(0,1).' > '.$min_fe_req;
+            if ($min_fe_req > 0 && !$this->has_min_unfiltered_stats_view_req($min_fe_req)) {
+                $tr_action[]='Check minimum site front-end requests: '.$this->has_min_unfiltered_stats_view_req(0,1).' > '.$min_fe_req;
             }
 			
             // Check minimum TMIP tracker code requests
@@ -198,7 +198,7 @@ class TMIPSystemNotices {
 				$debug_print=array_merge(array('notice_key_name'=>$notice_key_name),$debugArr);
 				$debug_print=array_merge($debug_print,array(
 					'curr_notice_install_date'=>$this->get_notice_date_format($install_date),
-					'curr_front_end_requests'=>$this->has_min_front_end_req(0,1),
+					'curr_front_end_requests'=>$this->has_min_unfiltered_stats_view_req(0,1),
 					'curr_tracker_code_loads'=>$this->has_min_tracker_loads(0,1),
 					'curr_notice_vdate_time'=>$this->get_notice_date_format(time()),
 					'curr_notice_first_view'=>$this->get_notice_date_format($first_view),
@@ -222,9 +222,10 @@ class TMIPSystemNotices {
         return isset($this->notices[$key]['first_view']) ? $this->notices[$key]['first_view'] : 0;
     }
 	
-	// Front end site requests
-    private function has_min_front_end_req($min_count,$output_count=0) {
-        $count_now = (int)get_option(tmip_vis_page_requests_opt); 
+	// Lifetime UnFiltered Stats views logged
+    private function has_min_unfiltered_stats_view_req($min_count,$output_count=0) {
+		$tmip_lc_total_logged_views_const=TMIP_Local_Stats_Config::tmip_lc_total_logged_views_const;
+		$count_now = (int)get_option($tmip_lc_total_logged_views_const); 
 		if ($output_count) return $count_now;
         return $count_now >= $min_count;
     }
@@ -246,12 +247,13 @@ class TMIPSystemNotices {
         $font_color = isset($notice['font_color']) ? $notice['font_color'] : '#FEFEFE';
         $font_size = isset($notice['font_size']) ? $notice['font_size'] : '1em';
         $border_color = isset($notice['border_color']) ? $notice['border_color'] : '#00D898';
-        $background = isset($notice['background']) ? $notice['background'] : '#666666';
+        $background = isset($notice['background']) ? $notice['background'] : '#646667';
         ?>
         <style>
         .tmip-notice-<?php echo esc_attr($this->current_notice_key); ?> {
             color: <?php echo esc_attr($font_color); ?> !important;
             position: relative !important;
+            display: block !important;
             border: 2px dashed <?php echo esc_attr($border_color); ?> !important;
 			border-radius: 15px!important;
             background: <?php echo esc_attr($background); ?> !important;
@@ -277,6 +279,7 @@ class TMIPSystemNotices {
         }
         .tmip-notice-<?php echo esc_attr($this->current_notice_key); ?> p {
             font-size: <?php echo esc_attr($font_size); ?> !important;
+			display:block !important;
             line-height: 1.6 !important;
             letter-spacing: 1.2px!important;
         }

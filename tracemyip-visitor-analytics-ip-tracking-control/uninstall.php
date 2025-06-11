@@ -45,7 +45,6 @@ class TMIP_Local_Stats_Uninstaller {
 
 		// Get all settings fields
 		$settings_fields = TMIP_Local_Stats_Config::SETTINGS_FIELDS;
-
 		// Delete all plugin settings
 		foreach ($settings_fields as $key => $setting) {
 			delete_option('tmip_lc_' . $key);
@@ -60,7 +59,12 @@ class TMIP_Local_Stats_Uninstaller {
 			}
 		}	
 		
+		# Delete additional option values
+		// Last DB Version
 		delete_option(TMIP_Local_Stats_Config::DB_VERSION_OPTION);
+		
+		// Total page view requests
+		delete_option(TMIP_Local_Stats_Config::tmip_lc_total_logged_views_const);
 
         // Clear any scheduled hooks
         wp_clear_scheduled_hook('tmip_lc_daily_cleanup');

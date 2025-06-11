@@ -443,6 +443,16 @@ class TMIP_Local_Stats_Tracking {
 						}
 					}
 				}
+				
+				// Increment total UnFiltered Stats views captured
+				$tmip_lc_total_logged_views_const=TMIP_Local_Stats_Config::tmip_lc_total_logged_views_const;
+				update_option($tmip_lc_total_logged_views_const,(int)get_option($tmip_lc_total_logged_views_const)+1);
+				
+				// Log TMIP Visitor Tracker total code echo requests [0611251243]
+				$v=(defined('tmip_enable_local_tracker_ops') and tmip_enable_local_tracker_ops==1) ? 1 : 0;
+				if ($v==1 and function_exists('tmip_log_stat_data')) {
+					tmip_insert_visitor_tracker($log_activity_only=1);
+				}
 
 				if (defined('TMIP_UF_DEBUG') && TMIP_UF_DEBUG) {
 					error_log(sprintf(

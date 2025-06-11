@@ -48,29 +48,46 @@ class TMIP_Local_Stats_Posts_Columns {
         return $columns;
     }
 
-    public function register_cpt_columns($post_type) {
-        if (post_type_exists($post_type) && !in_array($post_type, ['post', 'page'])) {
-            // Get CPT specific settings template
-            $cpt_settings = TMIP_Local_Stats_Config::get_cpt_settings($post_type);
-            
-            // Get default from CPT settings template
-            $default_enabled = isset($cpt_settings["enable_cpt_column_{$post_type}"]['default']) 
-                ? $cpt_settings["enable_cpt_column_{$post_type}"]['default'] 
-                : true; // Default to true if not specified
+	public function register_cpt_columns($post_type) {
+		// List of post types to exclude from showing hits column
+		$excluded_post_types = array(
+			'custom-css-js', // Exclude Simple Custom CSS & JS post type
+			'revision',
+			'nav_menu_item',
+			'customize_changeset',
+			'oembed_cache',
+			'user_request',
+			'wp_block'
+			// Add other post types to exclude as needed
+		);
 
-            // Check if column is enabled for this CPT
-            if (get_option("tmip_lc_enable_cpt_column_{$post_type}", $default_enabled)) {
-                if (defined('TMIP_UF_DEBUG') && TMIP_UF_DEBUG) {
-                    //error_log("TMIP Debug - Adding columns for CPT: {$post_type}");
-                }
-                
-                add_filter("manage_{$post_type}_posts_columns", array($this, 'debug_columns'), 1);
-                add_filter("manage_{$post_type}_posts_columns", array($this, 'add_view_count_column'), 20);
-                add_action("manage_{$post_type}_posts_custom_column", array($this, 'render_view_count_column'), 10, 2);
-                add_filter("manage_edit-{$post_type}_sortable_columns", array($this, 'make_view_count_sortable'));
-            }
-        }
-    }
+		// Skip if post type is in excluded list
+		if (in_array($post_type, $excluded_post_types)) {
+			return;
+		}
+
+		if (post_type_exists($post_type) && !in_array($post_type, ['post', 'page'])) {
+			// Get CPT specific settings template
+			$cpt_settings = TMIP_Local_Stats_Config::get_cpt_settings($post_type);
+
+			// Get default from CPT settings template
+			$default_enabled = isset($cpt_settings["enable_cpt_column_{$post_type}"]['default']) 
+				? $cpt_settings["enable_cpt_column_{$post_type}"]['default'] 
+				: true;
+
+			// Check if column is enabled for this CPT
+			if (get_option("tmip_lc_enable_cpt_column_{$post_type}", $default_enabled)) {
+				if (defined('TMIP_UF_DEBUG') && TMIP_UF_DEBUG) {
+					error_log("TMIP Debug - Adding columns for CPT: {$post_type}");
+				}
+
+				add_filter("manage_{$post_type}_posts_columns", array($this, 'debug_columns'), 1);
+				add_filter("manage_{$post_type}_posts_columns", array($this, 'add_view_count_column'), 20);
+				add_action("manage_{$post_type}_posts_custom_column", array($this, 'render_view_count_column'), 10, 2);
+				add_filter("manage_edit-{$post_type}_sortable_columns", array($this, 'make_view_count_sortable'));
+			}
+		}
+	}
 
     public function add_view_count_column($columns) {
         // Get default position from config
