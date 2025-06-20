@@ -400,7 +400,6 @@
 .tmip-ip-last-seen {
     text-align: right;
     white-space: normal;
-    min-width: 150px;
 }
 
 .tmip-time-ago {
@@ -477,9 +476,20 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 130px;
+    max-width: 100%;
     display: inline-block;
     cursor: help;
+}
+.tmip-ip-requests {
+    text-align: left;
+    white-space: nowrap;
+    margin-top: 3px;
+    padding-top: 0;
+    font-size: 0.9em;
+    color: #2271b1;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .tmip-ip-value[data-ip]:hover::after {
@@ -851,7 +861,6 @@
     color: #c53030 !important;
 }
 .tmip-notice-dismiss {
-    position: absolute;
     top: 0;
     right: 0;
     padding: 10px;

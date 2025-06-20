@@ -111,6 +111,7 @@ class TMIP_Local_Stats_Dashboard {
 	// In ls-dashboard-widget.php
 	public function get_daily_stats_ajax() {
 		if (!check_ajax_referer('tmip_dashboard_nonce', 'security', false)) {
+
 			wp_send_json_error('Invalid security token');
 			return;
 		}
@@ -1038,8 +1039,8 @@ class TMIP_Local_Stats_Dashboard {
 		
 		// Column names line
 		$output .= '<div class="tmip-column-names">' . 
-			__('Lookup | Copy | IP Address | Hits', 'tracemyip-local-stats') .
-			'<span class="tmip-column-last-activity">' . __('Last Activity Date/Time', 'tracemyip-local-stats') . '</span>' .
+			__('Lookup | Copy | IP | Hits', 'tracemyip-local-stats') .
+			'<span class="tmip-column-last-activity">' . __('Last Active', 'tracemyip-local-stats') . '</span>' .
 		'</div>';
 
 		if (empty($results)) {
@@ -1063,46 +1064,49 @@ class TMIP_Local_Stats_Dashboard {
     $time_ago = $this->format_time_ago(new DateTime($row->last_activity));
 
     $output .= sprintf(
-        '<li%s>
-            <div class="tmip-ip-actions">
-                %s
-                <button class="tmip-ip-action tmip-copy-ip" 
-                        data-ip="%s" 
-                        title="%s">
-                    <span class="dashicons dashicons-admin-page"></span>
-                </button>
+    '<li%s>
+        <div class="tmip-ip-actions">
+            %s
+            <button class="tmip-ip-action tmip-copy-ip" 
+                    data-ip="%s" 
+                    title="%s">
+                <span class="dashicons dashicons-admin-page"></span>
+            </button>
+        </div>
+        <div class="tmip-ip-container">
+            <span class="tmip-ip-value" data-ip="%s" title="%s">%s</span>
+            <div class="tmip-ip-requests">
+                <b>%s</b> %s%s
             </div>
-            <div class="tmip-ip-container">
-                <span class="tmip-ip-value" data-ip="%s" title="%s">%s</span>
-                %s
-            </div>
-            <span class="tmip-ip-requests"><b>%s</b> %s</span>
-            <span class="tmip-ip-last-seen">
-                <span class="tmip-time-ago">%s</span>
-                <span class="tmip-exact-time">%s</span>
-            </span>
-        </li>',
-        $row->is_bot ? ' class="is-bot"' : '',
-        $ip_lookup_service ? sprintf(
-            '<a href="%s" class="tmip-ip-action tmip-lookup-ip" target="_blank" title="%s">
-                <span class="dashicons dashicons-search"></span>
-            </a>',
-            $ip_link,
-            esc_attr__('Lookup IP', 'tracemyip-local-stats')
-        ) : '',
-        esc_attr($row->user_ip),
-        esc_attr__('Copy IP', 'tracemyip-local-stats'),
-        esc_attr($row->user_ip),
-        esc_attr($row->user_ip),
-        esc_html($row->user_ip),
-        $row->is_bot ? ' <span class="tmip-bot-indicator" title="' . esc_attr__('Bot/Crawler', 'tracemyip-local-stats') . '">
-            <span class="dashicons dashicons-admin-site"></span> (bot)
-        </span>' : '',
-        number_format($row->requests),
-        __('hits', 'tracemyip-local-stats'),
-        $time_ago,
-        date('Y-m-d H:i:s', strtotime($row->last_activity))
-    );
+        </div>
+        <span class="tmip-ip-last-seen">
+            <span class="tmip-time-ago">%s</span>
+            <span class="tmip-exact-time">%s</span>
+        </span>
+    </li>',
+    $row->is_bot ? ' class="is-bot"' : '',
+    $ip_lookup_service ? sprintf(
+        '<a href="%s" class="tmip-ip-action tmip-lookup-ip" target="_blank" title="%s">
+            <span class="dashicons dashicons-search"></span>
+        </a>',
+        $ip_link,
+        esc_attr__('Lookup IP', 'tracemyip-local-stats')
+    ) : '',
+    esc_attr($row->user_ip),
+    esc_attr__('Copy IP', 'tracemyip-local-stats'),
+    esc_attr($row->user_ip),
+    esc_attr($row->user_ip),
+    esc_html($row->user_ip),
+    number_format($row->requests),
+    __('hits', 'tracemyip-local-stats'),
+    $row->is_bot ? ' <span class="tmip-bot-indicator" title="' . esc_attr__('Bot/Crawler', 'tracemyip-local-stats') . '">
+        <span class="dashicons dashicons-admin-site"></span> (bot)
+    </span>' : '',
+    $time_ago,
+    date('Y-m-d H:i:s', strtotime($row->last_activity))
+);
+
+			
 }
 		
 

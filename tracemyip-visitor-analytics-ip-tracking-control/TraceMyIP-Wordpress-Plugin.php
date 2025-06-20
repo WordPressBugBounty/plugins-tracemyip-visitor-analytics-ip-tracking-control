@@ -4,14 +4,14 @@ defined('ABSPATH') || exit;
 	Plugin Name: An Official TraceMyIP Tracker with email alerts
 	Plugin URI: https://www.tracemyip.org
 	Description: Website visitor IP address activity tracking, IP analytics, visitor email alerts, IP changes tracker and visitor IP address blocking. UnFiltered post stats dashboard. Tag visitors IPs, count and track post views, schedule email alerts, control and manage pages, links and protect contact forms. GDPR options.
-	Version: 2.70
+	Version: 2.71
 	Author: TraceMyIP.org
 	Author URI: https://www.TraceMyIP.org
 	Text Domain: tracemyip-local-stats
 	License: GPLv2 (or later)
 	License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
-if (!defined('TMIP_VERSION') ) 		define('TMIP_VERSION', '2.70');
+if (!defined('TMIP_VERSION') ) 		define('TMIP_VERSION', '2.71');
 
 ### SET CONSTANTS ############################################
 // header('X-XSS-Protection:0');

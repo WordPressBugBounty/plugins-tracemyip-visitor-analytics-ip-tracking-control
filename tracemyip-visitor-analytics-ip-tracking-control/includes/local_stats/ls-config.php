@@ -346,7 +346,7 @@ class TMIP_Local_Stats_Config {
 			'default' => 5,
 			'type' => 'integer',
 			'min' => 3,
-			'max' => 20
+			'max' => 30
 		],
 		'active_ips_timeframe' => [
 			'section' => 'dashboard',
