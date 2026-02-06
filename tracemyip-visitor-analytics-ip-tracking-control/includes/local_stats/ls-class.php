@@ -456,7 +456,7 @@ class TMIP_Local_Stats {
     
 	
 	private function define_constants() {
-		define('TMIP_LOCAL_STATS_VERSION', $this->version);
+		define('TMIP_LOCAL_STATS_VERSION', defined('TMIP_VERSION') ? TMIP_VERSION : LS_STATS_VERSION);
 		define('TMIP_LOCAL_STATS_DB_PREFIX', $this->db_prefix);
 		define('TMIP_LOCAL_STATS_PATH', plugin_dir_path(__FILE__));
 

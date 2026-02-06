@@ -12,9 +12,8 @@
 
 defined('ABSPATH') || exit;
 
-define('TMIP_UF_DEBUG', false); // Enable debug states in wp-config.php: define( 'WP_DEBUG', true ); and define('WP_DEBUG_LOG', true );
 // JS debug is enabled in ls-js-admin.js
-
+define('TMIP_UF_DEBUG', false); // Enable debug states in wp-config.php: define( 'WP_DEBUG', true ); and define('WP_DEBUG_LOG', true );
 
 // Add debug logging function
 function tmip_debug_log($message, $data = null) {
@@ -31,8 +30,10 @@ class TMIP_Local_Stats_Config {
     
     private static $instance;
 	
+	// Versioning
 	const MIN_PHP_VERSION = '7.4.0';
-    
+	const LS_STATS_VERSION = '1.0.0'; // 052425122331 Define TMIP_VERSION to override
+	
     // Database configuration
     const DB_PREFIX = 'tmip_lc_';
  	const DB_CHARSET = 'utf8mb4';

@@ -510,149 +510,169 @@ class TMIP_Local_Stats_Dashboard {
 				</div>
 
 				<script>
-				jQuery(document).ready(function($) {
-					$.post(ajaxurl, {
-						action: 'tmip_get_daily_stats',
-						security: '<?php echo wp_create_nonce("tmip_dashboard_nonce"); ?>',
-					}, function(response) {
-						if (response.success) {
-							var chartMode = '<?php echo get_option('tmip_lc_chart_display_mode', 'separate'); ?>';
+				
+					
+					
+					
 
-							// Define series with their specific colors
-					var selectedSeries = <?php echo json_encode(get_option('tmip_lc_chart_series_display', ['posts', 'pages', 'custom'])); ?>;
+jQuery(document).ready(function($) {
+    $.post(ajaxurl, {
+        action: 'tmip_get_daily_stats',
+        security: '<?php echo wp_create_nonce("tmip_dashboard_nonce"); ?>',
+    }, function(response) {
+        if (response.success) {
+            var chartMode = '<?php echo get_option('tmip_lc_chart_display_mode', 'separate'); ?>';
 
-					// Ensure selectedSeries is always an array
-					if (!Array.isArray(selectedSeries)) {
-						selectedSeries = ['posts', 'pages', 'custom'];
-					}
+            // Define series with their specific colors
+            var selectedSeries = <?php echo json_encode(get_option('tmip_lc_chart_series_display', ['posts', 'pages', 'custom'])); ?>;
 
-					var seriesConfig = chartMode === 'combined' ? [
-						{
-							name: 'Total Hits',
-							data: response.data.views,
-							color: '#2E93fA'
-						}
-					] : [
-						{
-							name: 'Posts',
-							data: response.data.posts_views,
-							color: '#008FFB',
-							enabled: selectedSeries.includes('posts')
-						},
-						{
-							name: 'Pages',
-							data: response.data.pages_views,
-							color: '#00E396',
-							enabled: selectedSeries.includes('pages')
-						},
-						{
-							name: 'Custom Posts',
-							data: response.data.custom_views,
-							color: '#FEB019',
-							enabled: selectedSeries.includes('custom')
-						},
-						{
-							name: 'Media',
-							data: response.data.media_views,
-							color: '#FF4560',
-							enabled: selectedSeries.includes('media')
-						},
-						{
-							name: 'Other',
-							data: response.data.other_views,
-							color: '#775DD0',
-							enabled: selectedSeries.includes('other')
-						},
-						{
-							name: 'Bot Hits',
-							data: response.data.bot_views,
-							color: '#546E7A',
-							enabled: selectedSeries.includes('bots')
-						},
-						{
-							name: 'Unique Visits',
-							data: response.data.unique_visits,
-							color: '#26a69a',
-							enabled: selectedSeries.includes('unique')
-						}
-					].filter(series => {
-						// Ensure series is enabled and has valid data
-						return series.enabled !== false && 
-							   Array.isArray(series.data) && 
-							   series.data.some(value => value !== null && value !== undefined);
-					});
+            // Ensure selectedSeries is always an array
+            if (!Array.isArray(selectedSeries)) {
+                selectedSeries = ['posts', 'pages', 'custom'];
+            }
 
+            var seriesConfig = chartMode === 'combined' ? [
+                {
+                    name: 'Total Hits',
+                    data: response.data.views,
+                    color: '#2E93fA'
+                }
+            ] : [
+                {
+                    name: 'Posts',
+                    data: response.data.posts_views,
+                    color: '#008FFB',
+                    enabled: selectedSeries.includes('posts')
+                },
+                {
+                    name: 'Pages',
+                    data: response.data.pages_views,
+                    color: '#00E396',
+                    enabled: selectedSeries.includes('pages')
+                },
+                {
+                    name: 'Custom Posts',
+                    data: response.data.custom_views,
+                    color: '#FEB019',
+                    enabled: selectedSeries.includes('custom')
+                },
+                {
+                    name: 'Media',
+                    data: response.data.media_views,
+                    color: '#FF4560',
+                    enabled: selectedSeries.includes('media')
+                },
+                {
+                    name: 'Other',
+                    data: response.data.other_views,
+                    color: '#775DD0',
+                    enabled: selectedSeries.includes('other')
+                },
+                {
+                    name: 'Bot Hits',
+                    data: response.data.bot_views,
+                    color: '#546E7A',
+                    enabled: selectedSeries.includes('bots')
+                },
+                {
+                    name: 'Unique Visits',
+                    data: response.data.unique_visits,
+                    color: '#26a69a',
+                    enabled: selectedSeries.includes('unique')
+                }
+            ].filter(series => {
+                // Ensure series is enabled and has valid data
+                return series.enabled !== false && 
+                       Array.isArray(series.data) && 
+                       series.data.some(value => value !== null && value !== undefined);
+            });
 
-					var storageMethod = '<?php echo get_option('tmip_lc_storage_method', 'cookies'); ?>';
-					if (storageMethod === 'cookieless') {
-						// Filter out unique visits series
-						seriesConfig = seriesConfig.filter(series => series.name !== 'Unique Visits');
-					}
+            var storageMethod = '<?php echo get_option('tmip_lc_storage_method', 'cookies'); ?>';
+            if (storageMethod === 'cookieless') {
+                // Filter out unique visits series
+                seriesConfig = seriesConfig.filter(series => series.name !== 'Unique Visits');
+            }
 
-					var options = {
-						chart: {
-							type: 'area',
-							height: 250,
-							animations: {
-								enabled: true,
-								easing: 'easeinout',
-								speed: 800
-							},
-							toolbar: {
-								show: true
-							}
-						},
-						series: seriesConfig.map(s => ({
-							name: s.name,
-							data: s.data
-						})),
-						colors: seriesConfig.map(s => s.color),
-						stroke: {
-							curve: 'smooth',
-							width: 3,
-							colors: seriesConfig.map(s => s.color)
-						},
-						fill: {
-							type: 'solid',
-							opacity: 0.15
-						},
-						markers: {
-							size: 5,
-							radius: 5,
-							shape: 'circle',
-							colors: seriesConfig.map(s => s.color),
-							strokeColors: '#fff',
-							strokeWidth: 2,
-							hover: {
-								size: 7,
-								sizeOffset: 3
-							},
-							discrete: []
-						},
-						dataLabels: {
-							enabled: false
-						},
-						xaxis: {
-							categories: response.data.dates,
-							type: 'datetime',
-							labels: {
-								rotate: -45,
-								rotateAlways: false,
-								format: 'dd MMM',
-								style: {
-									fontSize: '12px'
-								}
-							},
-							tickAmount: Math.min(response.data.retention_days, 15)
-						},
-						yaxis: {
-							labels: {
-								formatter: function(val) {
-									return Math.floor(val);
-								}
-							}
-						},
-						tooltip: {
+            // Create a shifted color array for chart elements
+            // Shift colors backward by one position (last color becomes first)
+            var chartColors = seriesConfig.map(s => s.color);
+            var shiftedColors = [chartColors[chartColors.length - 1], ...chartColors.slice(0, -1)];
+
+            var options = {
+                chart: {
+                    type: 'area',
+                    height: 250,
+                    animations: {
+                        enabled: true,
+                        easing: 'easeinout',
+                        speed: 800
+                    },
+                    toolbar: {
+                        show: true
+                    }
+                },
+                series: seriesConfig.map(s => ({
+                    name: s.name,
+                    data: s.data
+                })),
+                // Use original colors for legend
+                colors: chartColors,
+                stroke: {
+                    curve: 'smooth',
+                    width: 3
+                },
+                fill: {
+                    type: 'solid',
+                    opacity: 0.15
+                },
+                markers: {
+                    size: 5,
+                    radius: 7,
+                    shape: 'circle',
+                    strokeColors: '#000',
+                    strokeWidth: 1,
+                    hover: {
+                        size: 7,
+                        sizeOffset: 3
+                    }
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                states: {
+                    hover: {
+                        filter: {
+                            type: 'none'  // Disable default hover filter
+                        }
+                    },
+                    active: {
+                        allowMultipleDataPointsSelection: false,
+                        filter: {
+                            type: 'none'  // Disable default active filter
+                        }
+                    }
+                },
+                xaxis: {
+                    categories: response.data.dates,
+                    type: 'datetime',
+                    labels: {
+                        rotate: -45,
+                        rotateAlways: false,
+                        format: 'dd MMM',
+                        style: {
+                            fontSize: '12px'
+                        }
+                    },
+                    tickAmount: Math.min(response.data.retention_days, 15)
+                },
+                yaxis: {
+                    labels: {
+                        formatter: function(val) {
+                            return Math.floor(val);
+                        }
+                    }
+                },
+                tooltip: {
 							shared: true,
 							intersect: false,
 							theme: 'light',
@@ -675,10 +695,10 @@ class TMIP_Local_Stats_Dashboard {
 								return '<div class="tmip-custom-tooltip">' +
 									w.globals.seriesNames.map((name, i) => {
 										if (series[i][dataPointIndex] !== undefined) {
-											return `<div class="tooltip-series" style="color: ${colors[i]}">
-												<span class="tooltip-marker" style="background: ${colors[i]}"></span>
-												<span class="series-name">${name}:</span>
-												<span class="series-value">${Math.floor(series[i][dataPointIndex])} hits</span>
+											return `<div class="tmip-tooltip-series" style="color: ${colors[i]}">
+												<span class="tmip-tooltip-marker" style="background: ${colors[i]}"></span>
+												<span class="tmip-series-name">${name}:</span>
+												<span class="tmip-series-value">${Math.floor(series[i][dataPointIndex])} hits</span>
 											</div>`;
 										}
 										return '';
@@ -686,106 +706,103 @@ class TMIP_Local_Stats_Dashboard {
 									'</div>';
 							}
 						},
-						legend: {
-							position: 'bottom',
-							horizontalAlign: 'center',
-							onItemClick: {
-								toggleDataSeries: true
-							},
-							onItemHover: {
-								highlightDataSeries: true
-							},
-							markers: {
-								width: 8,
-								height: 8,
-								strokeWidth: 0,
-								strokeColor: '#fff',
-								radius: 12,
-								offsetX: 0,
-								offsetY: 0,
-								shape: 'circle',
-								fillColors: seriesConfig.map(s => s.color)
-							},
-							showForSingleSeries: true
-						},
-						grid: {
-							borderColor: '#f1f1f1',
-							padding: {
-								bottom: 15
-							}
-						}
-					};
+                legend: {
+                    position: 'bottom',
+                    horizontalAlign: 'center',
+                    onItemClick: {
+                        toggleDataSeries: true
+                    },
+                    onItemHover: {
+                        highlightDataSeries: true
+                    },
+                    markers: {
+                        width: 8,
+                        height: 8,
+                        strokeWidth: 0,
+                        strokeColor: '#fff',
+                        radius: 12,
+                        offsetX: 0,
+                        offsetY: 0,
+                        shape: 'circle',
+                        fillColors: chartColors
+                    },
+                    showForSingleSeries: true
+                },
+                grid: {
+                    borderColor: '#f1f1f1',
+                    padding: {
+                        bottom: 15
+                    }
+                }
+            };
 
-					// Update the custom CSS section:
-					$('<style>')
-						.text(`
-							${seriesConfig.map((s, i) => `
-								.apexcharts-series[rel="${i}"] {
-									stroke: ${s.color} !important;
-								}
-								.apexcharts-series[rel="${i}"] path.apexcharts-line {
-									stroke: ${s.color} !important;
-								}
-								.apexcharts-series[rel="${i}"] path.apexcharts-area {
-									fill: ${s.color} !important;
-								}
-								.apexcharts-legend-series[data\\:collapsedIndex="${i}"] .apexcharts-legend-marker {
-									background-color: ${s.color} !important;
-									border-color: ${s.color} !important;
-								}
-								.apexcharts-series[rel="${i}"] .apexcharts-marker {
-									fill: ${s.color} !important;
-								}
-							`).join('\n')}
+            // Add CSS to fix the color mismatch and enhance hover effects
+            $('<style>').text(`
+                /* Fix the color mismatch by shifting colors backward */
+                ${seriesConfig.map((s, i) => `
+                    .apexcharts-series[rel="${i}"] {
+                        stroke: ${shiftedColors[i]} !important;
+                    }
+                    .apexcharts-series[rel="${i}"] path.apexcharts-line {
+                        stroke: ${shiftedColors[i]} !important;
+                    }
+                    .apexcharts-series[rel="${i}"] path.apexcharts-area {
+                        fill: ${shiftedColors[i]} !important;
+                    }
+                    .apexcharts-series[rel="${i}"] .apexcharts-marker {
+                        fill: ${shiftedColors[i]} !important;
+                    }
+                `).join('\n')}
 
-							.apexcharts-area {
-								opacity: 0.15 !important;
-							}
-							.apexcharts-series.apexcharts-active .apexcharts-area {
-								opacity: 0.3 !important;
-							}
+                /* Ensure legend markers match the legend colors */
+                ${seriesConfig.map((s, i) => `
+                    .apexcharts-legend-series[data\\:collapsedIndex="${i}"] .apexcharts-legend-marker {
+                        background-color: ${chartColors[i]} !important;
+                        border-color: ${chartColors[i]} !important;
+                    }
+                `).join('\n')}
 
-							/* Custom tooltip styling */
-							.tmip-custom-tooltip {
-								padding: 8px;
-								background: #fff;
-								border-radius: 4px;
-								box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-							}
-							.tmip-custom-tooltip .tooltip-series {
-								display: flex;
-								align-items: center;
-								margin: 4px 0;
-								font-size: 12px;
-							}
-							.tmip-custom-tooltip .tooltip-marker {
-								width: 8px;
-								height: 8px;
-								border-radius: 50%;
-								margin-right: 6px;
-								display: inline-block;
-							}
-							.tmip-custom-tooltip .series-name {
-								margin-right: 6px;
-							}
-							.tmip-custom-tooltip .series-value {
-								font-weight: 600;
-							}
+/* Default opacity for all series areas */
+.apexcharts-area {
+    opacity: 0.15 !important;
+    transition: opacity 0.2s ease !important;
+}
 
-							/* Ensure markers are circular */
-							.apexcharts-marker {
-								border-radius: 50% !important;
-							}
-						`)
-						.appendTo('head');
+/* When hovering over chart, reduce opacity of all series */
+.apexcharts-canvas:hover .apexcharts-area {
+    opacity: 0.04 !important;
+}
+
+/* Active series gets higher opacity */
+.apexcharts-series.apexcharts-active .apexcharts-area {
+    opacity: 0.75 !important;
+}
+
+/* Non-active series get lower opacity when any series is active */
+.apexcharts-canvas.apexcharts-series-highlighted .apexcharts-series:not(.apexcharts-active) .apexcharts-area {
+    opacity: 0.14 !important;
+}
+
+/* Improve hover transitions */
+.apexcharts-series {
+    transition: opacity 0.2s ease !important;
+}
+
+/* Force opacity on inactive series */
+.apexcharts-legend-series:hover + .apexcharts-plot-series .apexcharts-series:not(.apexcharts-active) .apexcharts-area {
+    opacity: 0.14 !important;
+}
 
 
+            `).appendTo('head');
 
-						var chart = new ApexCharts(document.querySelector("#tmip-daily-chart"), options);
-						chart.render();
-					}
-				});
-			});
+            var chart = new ApexCharts(document.querySelector("#tmip-daily-chart"), options);
+            chart.render();
+        }
+    });
+});
+					
+					
 			
 					
 					

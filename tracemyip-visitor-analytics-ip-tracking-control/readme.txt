@@ -2,9 +2,9 @@
 Contributors: TraceMyIP
 Tags: visitor tracking, ip tracker, visitor stats, website analytics, statistics, stats, trace my ip, post views counter, page views tracker, email alerts, hits counter, ip blocker, visitor analytics
 Requires at least: 2.0.4
-Tested up to: 6.8
+Tested up to: 6.9
 Requires PHP: 7.2
-Stable tag: 2.71
+Stable tag: 2.72
 License: GPLv2 (or later)
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://www.paypal.com/donate/?hosted_button_id=TND7BL8C3KFEW
@@ -231,6 +231,14 @@ With the IP tracking address book, you can effortlessly scan through all project
 * Notice: Consequent versions will require PHP 7.2 or higher.
 
 == Changelog ==
+
+= Version 2.72  =
+- Verify WordPress 6.9 full compatibility
+- Corrected versioning updates
+- Improved the hits stats charts series and tooltip graphics
+- Improved the hits stats charts highlighting for better visual differention between the series
+- Added new social platform tracking definitions
+- Added new social bookmarking tracking definitions
 
 = Version 2.71 =
 - Improved responsive layout for recent IP section

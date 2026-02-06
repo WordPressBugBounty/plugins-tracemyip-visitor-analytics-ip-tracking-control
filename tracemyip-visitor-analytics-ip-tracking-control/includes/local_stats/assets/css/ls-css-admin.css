@@ -391,11 +391,60 @@
 }
 
 .tmip-ip-requests {
-    text-align: right;
+    text-align: left;
     white-space: nowrap;
-    margin-right: 20px;
-    padding-top: 2px;
+    margin-top: -6px;
+    padding-top: 0;
+    font-size: 1.1em;
+    color: #9C0000;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
+
+.tmip-ip-value {
+	position: relative;
+    font-family: monospace;
+    font-size: 14px;
+    color: #333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    display: inline-block;
+    cursor: help;
+}
+.tmip-ip-value[data-ip]:hover::after {
+    content: attr(data-ip);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #333;
+    color: #fff;
+    padding: 5px;
+    border-radius: 3px;
+    z-index: 1;
+    white-space: nowrap;
+}
+
+.tmip-bot-indicator {
+    display: inline-flex;
+    align-items: center;
+    color: #66F;
+    font-size: 1em;
+    opacity: 1;
+    user-select: none;
+}
+
+.tmip-bot-indicator .dashicons {
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+    margin-right: 2px;
+    color: #d63638; /* Bot indicator color */
+}
+
+
 
 .tmip-ip-last-seen {
     text-align: right;
@@ -468,60 +517,6 @@
     margin-right: 10px;
 }
 
-.tmip-ip-value {
-	position: relative;
-    font-family: monospace;
-    font-size: 13px;
-    color: #2271b1;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%;
-    display: inline-block;
-    cursor: help;
-}
-.tmip-ip-requests {
-    text-align: left;
-    white-space: nowrap;
-    margin-top: 3px;
-    padding-top: 0;
-    font-size: 0.9em;
-    color: #2271b1;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.tmip-ip-value[data-ip]:hover::after {
-    content: attr(data-ip);
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background: #333;
-    color: #fff;
-    padding: 5px;
-    border-radius: 3px;
-    z-index: 1;
-    white-space: nowrap;
-}
-
-.tmip-bot-indicator {
-    display: inline-flex;
-    align-items: center;
-    color: #66F;
-    font-size: 1em;
-    opacity: 1;
-    user-select: none;
-}
-
-.tmip-bot-indicator .dashicons {
-    font-size: 14px;
-    width: 14px;
-    height: 14px;
-    margin-right: 2px;
-    color: #d63638; /* Bot indicator color */
-}
-
 .tmip-active-ips-list li.is-bot {
     background-color: rgba(255, 209, 209, 0.70);
 }
@@ -569,22 +564,23 @@
     margin: 0 !important;
 }
 .apexcharts-series path {
-    stroke-width: 3px !important;
+    /*stroke-width: 3px !important;*/
 }
 .apexcharts-series[seriesName="Posts"] {
-    stroke: #008FFB !important;
+    /*stroke: #008FFB !important;*/
 }
 .apexcharts-series[seriesName="Pages"] {
-    stroke: #00E396 !important;
+   /* stroke: #00E396 !important;*/
 }
 .apexcharts-series[seriesName="Custom Post Types"] {
-    stroke: #FEB019 !important;
+    /*stroke: #FEB019 !important;*/
 }
 .apexcharts-area-series .apexcharts-series-markers-wrap {
     pointer-events: all;
 }
 .apexcharts-series .apexcharts-marker {
-    stroke-width: 2px;
+    /*stroke-width: 2px;*/
+	stroke: #666 !important; /* Ensure SVG stroke is also black */
 }
 .apexcharts-legend-series:not(.apexcharts-inactive-legend) .apexcharts-legend-marker {
     opacity: 1 !important;
@@ -634,6 +630,46 @@
 .tmip-setting-section-subsettings select {
     margin-left: 10px;
 }
+
+
+/* 
+	CHART STYLING
+*/
+/* Enhanced tooltip styling */
+.tmip-custom-tooltip {
+    padding: 12px;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}
+
+.tmip-tooltip-series {
+    display: flex;
+    align-items: center;
+    margin-bottom: 6px;
+    padding: 3px 0;
+	margin-bottom: 2px !important;
+    padding: 1px 0 !important;
+}
+
+.tmip-tooltip-marker {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.tmip-series-name {
+    font-weight: 600;
+    margin-right: 6px;
+}
+
+.tmip-series-value {
+    font-weight: normal;
+}
 .tmip-chart-settings {
     margin-bottom: 20px;
 }
@@ -663,6 +699,8 @@
     margin-left: 15px;
     color: #646970;
 }
+
+
 .tmip-columns-main-settings {
     margin-bottom: 15px;
 }
