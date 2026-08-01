@@ -2,9 +2,9 @@
 Contributors: TraceMyIP
 Tags: visitor tracking, ip tracker, visitor stats, website analytics, statistics, stats, trace my ip, post views counter, page views tracker, email alerts, hits counter, ip blocker, visitor analytics
 Requires at least: 2.0.4
-Tested up to: 6.9
+Tested up to: 7.1
 Requires PHP: 7.2
-Stable tag: 2.72
+Stable tag: 2.73
 License: GPLv2 (or later)
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://www.paypal.com/donate/?hosted_button_id=TND7BL8C3KFEW
@@ -21,7 +21,7 @@ Embed a tracker code into your site and access full-featured analytics via the T
 A standalone, compact tracking system that logs visitor activity directly inside your WordPress dashboard, with no external connections required to log the page views. It also captures data that other website statistics services may not be able to detect due to web tracker blockers.
 
 == FEATURE HIGHLIGHTS ==
-* **All your sites. No-Delays stats. All on the primary SaaS dashboard.**
+* **All your sites. Real-time stats. AI-free, with no data sharing.**
 * [UnFiltered Stats Tracker](https://www.tracemyip.org/tools/link-click-tracker-ad-clicks-counter-ip-blocker/?wpp=readme_txt) - instantly view behind-the-scenes activity right inside WordPress, including key server requests like post, page, and article views, scraping attempts, AD and tracking blocked page views, IPv4 and IPv6 connections (hosting server must have IPv6 support), ghost traffic and traffic trends — directly on your WordPress dashboard.
 * [WordPress Blog **Visitor IP Tracking** and Analytics](https://www.tracemyip.org/website-analytics.htm?wpp=readme_txt)
 * [Website Visits **Email Alerts**](https://www.tracemyip.org/website-visitors-alerts.htm?wpp=readme_txt)
@@ -231,6 +231,12 @@ With the IP tracking address book, you can effortlessly scan through all project
 * Notice: Consequent versions will require PHP 7.2 or higher.
 
 == Changelog ==
+
+= Version 2.73  =
+- Verify WordPress 7.0 full compatibility
+- Updated GEO location DB data
+- Minor UE tweaks
+- Provisional checks for compatibility
 
 = Version 2.72  =
 - Verify WordPress 6.9 full compatibility

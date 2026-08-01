@@ -247,6 +247,7 @@ class TMIPSystemNotices {
         $font_color = isset($notice['font_color']) ? $notice['font_color'] : '#FEFEFE';
         $font_size = isset($notice['font_size']) ? $notice['font_size'] : '1em';
         $border_color = isset($notice['border_color']) ? $notice['border_color'] : '#00D898';
+        $border_radius = isset($notice['border_radius']) ? $notice['border_radius'] : '0px';
         $background = isset($notice['background']) ? $notice['background'] : '#646667';
         ?>
         <style>
@@ -274,23 +275,29 @@ class TMIPSystemNotices {
         }
         .tmip-notice-<?php echo esc_attr($this->current_notice_key); ?> {
             font-size: <?php echo esc_attr($font_size); ?> !important;
+			color: <?php echo esc_attr($font_color); ?> !important;
             line-height: 1.6 !important;
             letter-spacing: 1.2px!important;
         }
         .tmip-notice-<?php echo esc_attr($this->current_notice_key); ?> p {
             font-size: <?php echo esc_attr($font_size); ?> !important;
+			color: <?php echo esc_attr($font_color); ?> !important;
 			display:block !important;
             line-height: 1.6 !important;
             letter-spacing: 1.2px!important;
         }
         .tmip-notice-<?php echo esc_attr($this->current_notice_key); ?> a.button {
             font-size: <?php echo esc_attr($font_size); ?> !important;
-            border: 2px solid #FEFEFE !important;
+ 			color: <?php echo esc_attr($font_color); ?> !important;
+           	border: 2px solid #FEFEFE !important;
+           	border-radius: <?php echo esc_attr($border_radius); ?> !important;
             margin-right: 10px;
         }    
         .tmip-notice-<?php echo esc_attr($this->current_notice_key); ?> .tmip-notice-dismiss {
             font-size: <?php echo esc_attr($font_size); ?> !important;
-            border: 2px solid #333 !important;
+ 			color: <?php echo esc_attr($font_color); ?> !important;
+           	border: 2px solid #333 !important;
+           	border-radius: <?php echo esc_attr($border_radius); ?> !important;
         }
         .tmip-notice-robot-img {
             float: left;

@@ -7,7 +7,7 @@
 */
 global $tmip_notices_debug;
 
-$tmip_notices_debug=0; // 1-show skipped notices triggers, 2-show active notice vars, 99-reset all notices state
+$tmip_notices_debug=99; // 1-show skipped notices triggers, 2-show active notice vars, 99-reset all notices state
 
 
 $tmip_notices_arr=array();
@@ -17,6 +17,7 @@ $tmip_notices_arr['visitor_tracker_setup_reminder']=array(
 	'font_color'     => '#FEFEFE',
 	'font_size'      => '1.1em',
 	'border_color'	 => '#FFF',		
+	'border_radius'	 => '10px',		
 	'background'     => '#0073aa',
 	'image_url'      => $tmip_plugin_dir_url.'images/tmip-robot-carl-120x120-gray-TR.png',
 	'message'        => '<h3>Your '.tmip_service_Nname.' visitor tracker is almost ready!</h3> <p>Please configure settings.</p>',
