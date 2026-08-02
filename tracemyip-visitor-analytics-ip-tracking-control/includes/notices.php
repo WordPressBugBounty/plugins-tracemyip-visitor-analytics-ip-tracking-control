@@ -7,7 +7,7 @@
 */
 global $tmip_notices_debug;
 
-$tmip_notices_debug=99; // 1-show skipped notices triggers, 2-show active notice vars, 99-reset all notices state
+$tmip_notices_debug=0; // 0-Disble Debug, 1-show skipped notices triggers, 2-show active notice vars, 99-reset all notices state
 
 
 $tmip_notices_arr=array();

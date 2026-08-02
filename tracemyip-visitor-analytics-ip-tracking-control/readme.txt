@@ -4,7 +4,7 @@ Tags: visitor tracking, ip tracker, visitor stats, website analytics, statistics
 Requires at least: 2.0.4
 Tested up to: 7.1
 Requires PHP: 7.2
-Stable tag: 2.73
+Stable tag: 2.74
 License: GPLv2 (or later)
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://www.paypal.com/donate/?hosted_button_id=TND7BL8C3KFEW
@@ -231,6 +231,9 @@ With the IP tracking address book, you can effortlessly scan through all project
 * Notice: Consequent versions will require PHP 7.2 or higher.
 
 == Changelog ==
+
+= Version 2.74  =
+- Provisional setting correction
 
 = Version 2.73  =
 - Verify WordPress 7.0 full compatibility
