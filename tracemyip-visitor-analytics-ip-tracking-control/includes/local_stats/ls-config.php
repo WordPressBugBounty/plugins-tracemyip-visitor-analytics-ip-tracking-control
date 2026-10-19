@@ -434,7 +434,8 @@ class TMIP_Local_Stats_Config {
         'duckduckbot', 'baiduspider', 'yandexbot', 'facebot', 
         'ia_archiver', 'ahrefs', 'mj12bot', 'semrush', 'dotbot', 
         'megaindex', 'blexbot', 'sistrix', 'rogerbot', 'openai', 
-        'chatgpt', 'anthropic', 'claude'
+        'chatgpt', 'anthropic', 'claude', 'mediapartners-google'
+
     ];
 	
     public static function init() {

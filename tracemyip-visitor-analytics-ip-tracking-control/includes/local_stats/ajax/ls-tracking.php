@@ -34,17 +34,21 @@ class TMIP_Local_Stats_Tracking {
             return false;
         }
 
-        if (in_array('crawlers', $exclude_groups) || in_array('ai_bots', $exclude_groups)) {
-            $user_agent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
-            if ($user_agent) {
-                $bot_patterns = TMIP_Local_Stats_Config::BOT_SIGNATURES;
-                foreach ($bot_patterns as $pattern) {
-                    if (stripos($user_agent, $pattern) !== false) {
-                        return false;
-                    }
-                }
-            }
-        }
+        
+		if (
+			(
+				in_array('crawlers', $exclude_groups, true) ||
+				in_array('ai_bots', $exclude_groups, true)
+			) &&
+			$this->is_bot(
+				$this->sanitize_user_agent(
+					$_SERVER['HTTP_USER_AGENT'] ?? ''
+				)
+			)
+		) {
+			return false;
+		}
+
 
         $exclude_ips = get_option('tmip_lc_exclude_ips', array());
         if (in_array($_SERVER['REMOTE_ADDR'], $exclude_ips)) {
